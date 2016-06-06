@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+
+    >
+    <RelativeLayout
+        android:padding="10dp"
+        android:background="@drawable/shape_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+   <TextView
+       android:id="@+id/id_btn_date_ok"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_alignParentRight="true"
+       android:text="确认"
+       />
+    <TextView
+        android:id="@+id/id_btn_date_cancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="取消"
+        />
+    </RelativeLayout>
+    <DatePicker
+        android:id="@+id/datePick1"
+        android:datePickerMode="spinner"
+        android:calendarViewShown="false"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        />
+</LinearLayout>
