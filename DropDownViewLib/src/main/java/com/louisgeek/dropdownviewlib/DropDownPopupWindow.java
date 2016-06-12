@@ -22,7 +22,6 @@ public class DropDownPopupWindow extends PopupWindow implements DropDownViewRecy
     private List<Map<String, Object>> mNameStateList;
     private Context mContext;
     //  TextView id_pop_tv;
-    String nowName = "";
     RecyclerView mRecyclerView;
     int gridColumns;
     int itemWidth;
@@ -74,15 +73,15 @@ public class DropDownPopupWindow extends PopupWindow implements DropDownViewRecy
     public void onItemViewClick(View v, int Position) {
                  this.dismiss();
 
-                nowName=mNameStateList.get(Position).get("name").toString();
+            Map<String,Object> nowMap =mNameStateList.get(Position);
 
-                onItemSelectListener.onItemSelect(nowName);
+                onItemSelectListener.onItemSelect(nowMap);
 
     }
 
 
     public interface OnItemSelectListener {
-        void onItemSelect(String text);
+        void onItemSelect(Map<String,Object> map);
     }
 
     public void setOnItemSelectListener(OnItemSelectListener onItemSelectListener) {

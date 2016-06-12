@@ -4,9 +4,9 @@
               android:orientation="horizontal"
               android:id="@+id/id_ll_item"
               android:gravity="center"
-              android:paddingTop="10dp"
+              android:paddingTop="8dp"
               android:background="@drawable/selector_shape_list_item_notop"
-              android:paddingBottom="10dp"
+              android:paddingBottom="8dp"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content">
 <TextView
