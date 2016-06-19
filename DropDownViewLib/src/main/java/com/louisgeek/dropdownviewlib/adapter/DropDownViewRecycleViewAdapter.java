@@ -1,4 +1,4 @@
-package com.louisgeek.dropdownviewlib;
+package com.louisgeek.dropdownviewlib.adapter;
 
 import android.content.Context;
 import android.os.Handler;
@@ -9,6 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.louisgeek.dropdownviewlib.R;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,8 +27,8 @@ public class DropDownViewRecycleViewAdapter extends RecyclerView.Adapter<Recycle
 
     public void updateBackground(boolean showAbove,RecyclerView recyclerView) {
         List<Map<String, Object>> mNameStateListTemp=new ArrayList<>();
-        for (int i = 0; i < mNameStateList.size(); i++) {
-            Map<String, Object> mapTemp= mNameStateList.get(i);
+        for (int i = 0; i < mDataList.size(); i++) {
+            Map<String, Object> mapTemp= mDataList.get(i);
             if (showAbove){
                 mapTemp.put("isShowAbove","true");
             }else{
@@ -34,8 +36,8 @@ public class DropDownViewRecycleViewAdapter extends RecyclerView.Adapter<Recycle
             }
             mNameStateListTemp.add(mapTemp);
         }
-        mNameStateList.clear();
-        mNameStateList.addAll(mNameStateListTemp);
+        mDataList.clear();
+        mDataList.addAll(mNameStateListTemp);
         Log.d(TAG, "updateBackground:isShowAbove"+showAbove);
         Handler handler=new Handler();
         //线程报错
@@ -44,13 +46,13 @@ public class DropDownViewRecycleViewAdapter extends RecyclerView.Adapter<Recycle
     }
 
 
-    public DropDownViewRecycleViewAdapter(Context context, List<Map<String, Object>> mNameStateList, int itemWidth) {
+    public DropDownViewRecycleViewAdapter(Context context, List<Map<String, Object>> dataList, int itemWidth) {
         mContext = context;
-        this.mNameStateList = mNameStateList;
+        this.mDataList = dataList;
         this.itemWidth=itemWidth;
     }
 
-    private List<Map<String, Object>> mNameStateList;
+    private List<Map<String, Object>> mDataList;
     private Context mContext;
 
     @Override
@@ -68,8 +70,8 @@ public class DropDownViewRecycleViewAdapter extends RecyclerView.Adapter<Recycle
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         MyRecyclerViewHolder myRecyclerViewHolder = (MyRecyclerViewHolder) holder;
 
-        if (mNameStateList.get(position).get("isShowAbove")!=null){
-        String isShowAbove=mNameStateList.get(position).get("isShowAbove").toString();
+        if (mDataList.get(position).get("isShowAbove")!=null){
+        String isShowAbove=mDataList.get(position).get("isShowAbove").toString();
         Log.d(TAG, "onBindViewHolder updateBackground:isShowAbove"+isShowAbove);
         if("true".equals(isShowAbove)) {
             myRecyclerViewHolder.id_ll_item.setBackgroundResource(R.drawable.selector_shape_list_item_nobottom);
@@ -77,13 +79,14 @@ public class DropDownViewRecycleViewAdapter extends RecyclerView.Adapter<Recycle
             myRecyclerViewHolder.id_ll_item.setBackgroundResource(R.drawable.selector_shape_list_item_notop);
         }
         }
-
-        myRecyclerViewHolder.mTextView.setText(mNameStateList.get(position).get("name").toString());
+        if (mDataList.get(position).get("name")!=null){
+            myRecyclerViewHolder.mTextView.setText(mDataList.get(position).get("name").toString());
+        }
     }
 
     @Override
     public int getItemCount() {
-        return mNameStateList.size();
+        return mDataList.size();
     }
 
     class MyRecyclerViewHolder extends RecyclerView.ViewHolder {

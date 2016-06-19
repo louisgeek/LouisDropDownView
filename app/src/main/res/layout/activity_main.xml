@@ -8,25 +8,36 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="com.louisgeek.louisdropdownview.MainActivity">
 
-    <TextView
-        android:id="@+id/id_tv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"/>
 
     <com.louisgeek.dropdownviewlib.DropDownView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/id_tv"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        app:itemArray="@array/spinner_array_defalut"
+        app:itemArray="@array/dropdown_array_default_with_key"
         android:id="@+id/id_ddv"
+        android:padding="10dp"
         />
 
     <com.louisgeek.dropdownviewlib.DateSelectView
+        android:id="@+id/id_dsv"
         android:layout_below="@+id/id_ddv"
+        android:padding="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
+
+    <com.louisgeek.dropdownviewlib.ProvinceCityAreaSelectView
+        android:id="@+id/id_pcsv"
+        android:layout_width="wrap_content"
+        android:layout_below="@id/id_dsv"
+        android:layout_height="wrap_content"/>
+    <Button
+        android:layout_below="@id/id_pcsv"
+        android:layout_width="match_parent"
+        android:id="@+id/id_btn"
+        android:text="多选"
+        android:layout_height="wrap_content"/>
+
+
 </RelativeLayout>
