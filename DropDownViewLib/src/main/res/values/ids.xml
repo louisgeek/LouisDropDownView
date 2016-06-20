@@ -8,4 +8,5 @@
 
     <item type="id" name="hold_baseid"/>
 
+    <item type="id" name="hold_check_pos"/>
 </resources>

@@ -3,7 +3,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 >
-    <com.louisgeek.dropdownviewlib.MultiSelectView
+    <com.louisgeek.dropdownviewlib.MultiSelectLayout
         android:id="@+id/id_msv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>

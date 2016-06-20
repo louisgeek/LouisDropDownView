@@ -17,7 +17,7 @@ import java.util.Map;
 /**
  * Created by louisgeek on 2016/6/17.
  */
-public class MultiSelectViewAdapter extends BaseAdapter {
+public class MultiSelectViewContentBaseAdapter extends BaseAdapter {
     public void updateMultiSelectMapListInner(List<Map<String, Object>> multiSelectMapListInner) {
         mMultiSelectMapListInner.clear();
         mMultiSelectMapListInner.addAll(multiSelectMapListInner);
@@ -35,7 +35,7 @@ public class MultiSelectViewAdapter extends BaseAdapter {
     int checkNum = 0;
 
     // 构造器
-    public MultiSelectViewAdapter(Context context, List<Map<String, Object>> multiSelectMapListInner) {
+    public MultiSelectViewContentBaseAdapter(Context context, List<Map<String, Object>> multiSelectMapListInner) {
         this.context = context;
         this.mMultiSelectMapListInner = multiSelectMapListInner;
         inflater = LayoutInflater.from(context);
@@ -78,7 +78,7 @@ public class MultiSelectViewAdapter extends BaseAdapter {
             // 获得ViewHolder对象
             holder = new ViewHolder();
             // 导入布局并赋值给convertview
-            convertView = inflater.inflate(R.layout.muti_select_list_item, parent, false);
+            convertView = inflater.inflate(R.layout.mutiselect_dialog_frag_list_item, parent, false);
             holder.tv = (TextView) convertView.findViewById(R.id.item_tv);
             holder.cb = (CheckBox) convertView.findViewById(R.id.item_cb);
             // 为view设置标签

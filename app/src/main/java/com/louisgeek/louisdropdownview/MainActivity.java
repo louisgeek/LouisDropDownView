@@ -2,10 +2,8 @@ package com.louisgeek.louisdropdownview;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
-import android.widget.Button;
 
-import com.louisgeek.dropdownviewlib.ui.MutiSelectDialogFragment;
+import com.louisgeek.dropdownviewlib.MultiSelectView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -20,23 +18,16 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         initData();
-        Button id_btn = (Button) findViewById(R.id.id_btn);
-        id_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                MutiSelectDialogFragment myDialogFragment = MutiSelectDialogFragment.newInstance("");
-                myDialogFragment.setCancelable(false);
-                myDialogFragment.setupMultiSelectMapListOut(mMultiSelectMapListOut);
-                myDialogFragment.show(getSupportFragmentManager(), "myDialogFragment");
-            }
-        });
+
+       MultiSelectView multiSelectView= (MultiSelectView) findViewById(R.id.id_msv);
+        multiSelectView.setMultiSelectMapListOutter(mMultiSelectMapListOut);
+
     }
 
     private void initData() {
         mMultiSelectMapListOut=new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 2; i++) {
             Map<String,Object> map=new HashMap<>();
             map.put("name", "name" + i);
             map.put("key", "key" + i);

@@ -9,10 +9,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.louisgeek.dropdownviewlib.MultiSelectView;
+import com.louisgeek.dropdownviewlib.MultiSelectLayout;
 import com.louisgeek.dropdownviewlib.R;
+import com.orhanobut.logger.Logger;
 
 import java.util.List;
 import java.util.Map;
@@ -23,10 +23,9 @@ import java.util.Map;
 public class MutiSelectDialogFragment extends DialogFragment {
 
     private final static   String TITLE_KEY="TitleKey";
-
     TextView id_tv_ok;
     TextView id_tv_cancel;
-     MultiSelectView id_msv;
+     MultiSelectLayout id_msv;
     Dialog dialog;
   /*  public void setupMultiSelectMapList(List<Map<String, Object>> multiSelectMapList) {
         mMultiSelectMapList = multiSelectMapList;
@@ -60,20 +59,21 @@ public class MutiSelectDialogFragment extends DialogFragment {
         }else{
             dialog.setTitle(title);
         }
-        View view=inflater.inflate(R.layout.mutiselect_dialog_frag_list_content,container,false);
+        View view=inflater.inflate(R.layout.layout_mutiselect_dialog_frag,container,false);
 
-        id_msv= (MultiSelectView) view.findViewById(R.id.id_msv);
-        id_msv.setOnBtnClickListener(new MultiSelectView.OnBtnClickListener() {
+        id_msv= (MultiSelectLayout) view.findViewById(R.id.id_msv);
+        id_msv.setOnBtnClickListener(new MultiSelectLayout.OnBtnClickListener() {
             @Override
             public void onOkBtnClick(View v, List<Map<String, Object>> multiSelectMapList, List<Map<String, Object>> selectMapList) {
                 dialog.dismiss();
+                onBackDataListener.onBackData(multiSelectMapList,selectMapList);
 
-                StringBuilder sb=new StringBuilder("选中"+selectMapList.size()+"项,分别是:");
+              /*  StringBuilder sb=new StringBuilder("选中"+selectMapList.size()+"项,分别是:");
                 for (int i = 0; i < selectMapList.size(); i++) {
                             String name=  selectMapList.get(i).get("name").toString();
                             sb.append(name);
                         }
-                Toast.makeText(getActivity(), ""+sb.toString(), Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(), ""+sb.toString(), Toast.LENGTH_LONG).show();*/
             }
 
             @Override
@@ -107,6 +107,16 @@ public class MutiSelectDialogFragment extends DialogFragment {
      */
     public void setupMultiSelectMapListOut(List<Map<String,Object>> multiSelectMapListOut){
         mMultiSelectMapListOut=multiSelectMapListOut;
+        Logger.d("setupMultiSelectMapListOut: "+mMultiSelectMapListOut);
     }
 
+    public  interface  OnBackDataListener{
+        void onBackData(List<Map<String, Object>> multiSelectMapList,List<Map<String, Object>> selectMapList);
+    }
+
+    public void setOnBackDataListener(OnBackDataListener onBackDataListener) {
+        this.onBackDataListener = onBackDataListener;
+    }
+
+    OnBackDataListener onBackDataListener;
 }

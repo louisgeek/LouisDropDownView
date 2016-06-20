@@ -57,7 +57,9 @@ public class DateSelectView extends TextView implements View.OnClickListener {
             public void onDateSelect(int year, int monthOfYear, int dayOfMonth) {
                // SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
                 if (year==0&&monthOfYear==0&&dayOfMonth==0){
-                    nowDateText=DateTool.getChinaDate();
+                    if (nowDateText.equals("")) {
+                        nowDateText = DateTool.getChinaDate();
+                    }
                 }else{
                     nowDateText=DateTool.getChinaDateFromCalendar(year,monthOfYear,dayOfMonth);
                 }
