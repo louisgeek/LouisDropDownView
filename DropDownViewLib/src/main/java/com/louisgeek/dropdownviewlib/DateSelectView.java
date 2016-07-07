@@ -75,7 +75,11 @@ public class DateSelectView extends TextView implements View.OnClickListener {
         }else{
             //先转
             Date date=DateTool.parseStr2Data(text,DateTool.FORMAT_DATE);
-            nowDateText=DateTool.parseDate2Str(date,DateTool.FORMAT_DATE);
+            if (date!=null) {
+                nowDateText = DateTool.parseDate2Str(date, DateTool.FORMAT_DATE);
+            }else{
+                nowDateText=DateTool.getChinaDate();
+            }
         }
         this.setText(nowDateText);
     }

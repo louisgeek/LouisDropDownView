@@ -7,6 +7,7 @@
     <item type="id" name="hold_userid"/>
 
     <item type="id" name="hold_baseid"/>
+    <item type="id" name="hold_basename"/>
 
     <item type="id" name="hold_check_pos"/>
 </resources>

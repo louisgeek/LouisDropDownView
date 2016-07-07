@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 
-import com.louisgeek.dropdownviewlib.MultiSelectView;
 import com.louisgeek.dropdownviewlib.R;
 
 import java.util.List;
@@ -19,6 +18,8 @@ import java.util.Map;
  */
 public class MultiSelectViewRecycleViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
     private  int mShowCount;
+  //  private final int NORMAL_ITEM=0;
+  //  private final int MORE_ITEM=1;
     public MultiSelectViewRecycleViewAdapter(List<Map<String, Object>> dataList, Context context,int showCount) {
         mDataList = dataList;
         mContext = context;
@@ -49,6 +50,7 @@ public class MultiSelectViewRecycleViewAdapter extends RecyclerView.Adapter<Recy
         return mDataList.size();
       //  return mDataList.size()<mShowCount?mDataList.size():mShowCount;//only  show  x item
     }
+
 
     class  MyRecyclerViewHolder extends RecyclerView.ViewHolder{
       //  TextView item_tv;

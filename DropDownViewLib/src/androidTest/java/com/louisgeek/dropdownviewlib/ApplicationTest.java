@@ -10,4 +10,7 @@ public class ApplicationTest extends ApplicationTestCase<Application> {
     public ApplicationTest() {
         super(Application.class);
     }
+    public void testA(){
+        ProCateSelectView proCateSelectView=new ProCateSelectView(getContext());
+    }
 }

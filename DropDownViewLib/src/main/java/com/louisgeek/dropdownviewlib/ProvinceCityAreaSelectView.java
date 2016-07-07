@@ -53,8 +53,8 @@ public class ProvinceCityAreaSelectView extends LinearLayout {
 
 
         TypedArray typedArray = context.obtainStyledAttributes(attrs,
-                R.styleable.MyProvinceCityAreaSelectView);
-        allAreaKey = typedArray.getString(R.styleable.MyProvinceCityAreaSelectView_allAreaKey);//like "000000"  see in ssq.json
+                R.styleable.ProvinceCityAreaSelectView);
+        allAreaKey = typedArray.getString(R.styleable.ProvinceCityAreaSelectView_allAreaKey);//like "000000"  see in ssq.json
 
         if (allAreaKey == null) {
             allAreaKey = ALL_AREA_KEY_DEFAULT;
@@ -137,7 +137,7 @@ public class ProvinceCityAreaSelectView extends LinearLayout {
     }
 
     private void initInnerArea(int province_pos, int city_pos) {
-        id_ddv_area.setText(id_ddv_city.getDefaultText());
+        id_ddv_area.setText(id_ddv_area.getDefaultText());
         List<Map<String, Object>> dataList_area = new ArrayList<>();
         for (int i = 0; i < provinceList.get(province_pos).getCites().get(city_pos).getAreas().size(); i++) {
             Map<String, Object> map = new HashMap<>();
@@ -152,6 +152,7 @@ public class ProvinceCityAreaSelectView extends LinearLayout {
     private void initData() {
         ssq_json = MySSQTool.getStringFromRaw(getContext(), R.raw.ssq);
         provinceList = MySSQTool.parseJson(ssq_json);
+
     }
 
 
@@ -283,11 +284,11 @@ public class ProvinceCityAreaSelectView extends LinearLayout {
         String province_id = id_ddv_province.getSelectKey();
         String city_id = id_ddv_city.getSelectKey();
         String area_id = id_ddv_area.getSelectKey();
-        if (area_id != null && !area_id.equals("")) {
+        if (area_id != null && !area_id.equals("")&&!area_id.equals("-1")) {
             return area_id;
-        } else if (city_id != null && !city_id.equals("")) {
+        } else if (city_id != null && !city_id.equals("")&&!city_id.equals("-1")) {
             return city_id;
-        } else if (province_id != null && !province_id.equals("")) {
+        } else if (province_id != null && !province_id.equals("")&&!province_id.equals("-1")) {
             return province_id;
         } else {
             return ALL_AREA_KEY_DEFAULT;

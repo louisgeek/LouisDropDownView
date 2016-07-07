@@ -32,6 +32,10 @@ public class MultiSelectViewContentBaseAdapter extends BaseAdapter {
     // 用来导入布局
     private LayoutInflater inflater = null;
 
+    public int getCheckNum() {
+        return checkNum<0?0:checkNum;
+    }
+
     int checkNum = 0;
 
     // 构造器
@@ -50,6 +54,7 @@ public class MultiSelectViewContentBaseAdapter extends BaseAdapter {
         for (int i = 0; i < mMultiSelectMapListInner.size(); i++) {
             if (Boolean.parseBoolean(String.valueOf(mMultiSelectMapListInner.get(i).get("checked")))) {
                 isSelectedMap.put(i, true);//索引
+                checkNum++;
             }else{
                 isSelectedMap.put(i, false);//索引
             }
@@ -99,7 +104,7 @@ public class MultiSelectViewContentBaseAdapter extends BaseAdapter {
         CheckBox cb;
     }
 
-    public int seletOne(View view,int pos) {
+    public void seletOne(View view,int pos) {
         ViewHolder viewHolder= (ViewHolder) view.getTag();
         viewHolder.cb.toggle();//转变
         isSelectedMap.put(pos,viewHolder.cb.isChecked());
@@ -109,9 +114,9 @@ public class MultiSelectViewContentBaseAdapter extends BaseAdapter {
             checkNum--;
         }
         this.notifyDataSetChanged();
-        return checkNum<0?0:checkNum;
+        checkNum=checkNum<0?0:checkNum;
     }
-    public int seletAll() {
+    public void seletAll() {
         // 遍历list，全部设为true
         for (int i = 0; i < mMultiSelectMapListInner.size(); i++) {
             if (!isSelectedMap.get(i)) {
@@ -120,10 +125,10 @@ public class MultiSelectViewContentBaseAdapter extends BaseAdapter {
             }
         }
         this.notifyDataSetChanged();
-        return checkNum<0?0:checkNum;
+        checkNum=checkNum<0?0:checkNum;
     }
 
-    public int unSeletAll() {
+    public void unSeletAll() {
         // 遍历list，全部设为false
         for (int i = 0; i < mMultiSelectMapListInner.size(); i++) {
             if (isSelectedMap.get(i)) {
@@ -132,12 +137,12 @@ public class MultiSelectViewContentBaseAdapter extends BaseAdapter {
             }
         }
         this.notifyDataSetChanged();
-        return checkNum<0?0:checkNum;
+        checkNum=checkNum<0?0:checkNum;
     }
 
 
 
-    public int backSelet() {
+    public void backSelet() {
         for (int i = 0; i < mMultiSelectMapListInner.size(); i++) {
             if (isSelectedMap.get(i)) {
                 isSelectedMap.put(i, false);
@@ -148,7 +153,7 @@ public class MultiSelectViewContentBaseAdapter extends BaseAdapter {
             }
         }
         this.notifyDataSetChanged();
-        return checkNum<0?0:checkNum;
+        checkNum=checkNum<0?0:checkNum;
     }
 
 /*

@@ -17,14 +17,14 @@ public class DateTool {
     public static final String FORMAT_DATE_TIME="yyyy-MM-dd HH:mm:ss";
 
     /**
-     * 取当前日期
+     * 取当前China日期
      * @return
      */
     public static String getChinaDate() {
         return parseDate2Str(new Date(),FORMAT_DATE);//取当前时间
     }
     /**
-     * 取当前时间
+     * 取当前China时间
      * @return
      */
     public static String getChinaDateTime() {
@@ -61,7 +61,7 @@ public class DateTool {
     }
 
 
-    //不推荐
+    //不推荐  好用的
     @Deprecated
     public static String getZhongGuoTime(){
         System.setProperty("user.timezone", "Asia/Shanghai");

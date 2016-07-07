@@ -10,7 +10,7 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/id_rv"
         android:layout_width="wrap_content"
-        android:layout_height="105dp"
+        android:layout_height="64dp"
         android:scrollbars="vertical"
         />
     <TextView

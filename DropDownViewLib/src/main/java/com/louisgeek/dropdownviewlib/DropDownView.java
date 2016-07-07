@@ -52,8 +52,8 @@ private  Context mContext;
     public DropDownView(Context context, AttributeSet attrs) {
         super(context, attrs);
         TypedArray typedArray = context.obtainStyledAttributes(attrs,
-                R.styleable.MyDropDownView);
-        int itemArray_resID = typedArray.getResourceId(R.styleable.MyDropDownView_itemArray,0);
+                R.styleable.DropDownView);
+        int itemArray_resID = typedArray.getResourceId(R.styleable.DropDownView_itemArray,0);
         if (itemArray_resID!=0) {
             items_all = getResources().getStringArray(itemArray_resID);//R.array.select_dialog_items
         }
@@ -306,5 +306,15 @@ private  Context mContext;
      */
     public String getNameByPosition(int position){
         return String.valueOf(dataList.get(position).get("name"));
+    }
+    /**
+     * 通过position设置name
+     */
+    public void setNameByPosition(int position){
+        String name="";
+        if (dataList!=null&&dataList.size()>0&&position<dataList.size()){
+            name=String.valueOf(dataList.get(position).get("name"));
+        }
+        this.setSelectName(name);
     }
 }

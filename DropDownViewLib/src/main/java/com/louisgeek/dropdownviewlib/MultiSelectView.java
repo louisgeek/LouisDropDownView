@@ -66,8 +66,8 @@ public class MultiSelectView extends LinearLayout implements View.OnClickListene
     public MultiSelectView(Context context, AttributeSet attrs) {
         super(context, attrs);
         TypedArray typedArray = context.obtainStyledAttributes(attrs,
-                R.styleable.MyMultiSelectView);
-        int itemArray_resID = typedArray.getResourceId(R.styleable.MyMultiSelectView_multItemArray,0);
+                R.styleable.MultiSelectView);
+        int itemArray_resID = typedArray.getResourceId(R.styleable.MultiSelectView_multItemArray,0);
         if (itemArray_resID!=0) {
             items_all = getResources().getStringArray(itemArray_resID);//R.array.select_dialog_items
         }
@@ -88,7 +88,7 @@ public class MultiSelectView extends LinearLayout implements View.OnClickListene
             }
         }
             //
-        int showColumns = typedArray.getInt(R.styleable.MyMultiSelectView_showColumns,0);
+        int showColumns = typedArray.getInt(R.styleable.MultiSelectView_showColumns,0);
         if (showColumns>0){
             nowShowColumns=showColumns;
         }else{
@@ -137,11 +137,17 @@ public class MultiSelectView extends LinearLayout implements View.OnClickListene
 
 
         mRecyclerView.setLayoutManager(new GridLayoutManager(mContext,nowShowColumns));
+       // mRecyclerView.addItemDecoration(new GridSpacingItemDecoration(nowShowColumns,5,true));
         mRecyclerView.setAdapter(mMultiSelectViewRecycleViewAdapter);
 
+        //mRecyclerView.addItemDecoration(new SpacesItemDecoration(10));
+        //mRecyclerView.addItemDecoration(new SpacesItemDecorationTwo(5));
+      //  mRecyclerView.addItemDecoration(new ListSpacingDecoration(this));
+        //
         dealLieAndHeight();
         //
         view.setOnClickListener(this);
+        //mRecyclerView.setOnClickListener(this);
         /*if (this.getPaddingTop()==0&&this.getPaddingBottom()==0&&this.getPaddingLeft()==0&&this.getPaddingRight()==0) {
             int paddingLeft_Right = SizeTool.dp2px(mContext, 10);
             int paddingTop_Bottom = SizeTool.dp2px(mContext, 6);
@@ -180,7 +186,6 @@ public class MultiSelectView extends LinearLayout implements View.OnClickListene
             @Override
             public void onBackData(List<Map<String, Object>> multiSelectMapList, List<Map<String, Object>> selectMapList) {
                 setupMultiSelectMapListOutter(multiSelectMapList);
-                mSelectMapList = selectMapList;//赋值
             }
         });
         if (mContext instanceof AppCompatActivity){
@@ -201,25 +206,26 @@ public class MultiSelectView extends LinearLayout implements View.OnClickListene
 
     }
     public String  getSelectedKey() {
-        String selectKey="";
+        String selectedKeys="";
         StringBuilder sb=new StringBuilder();
-        if (mSelectMapList!=null&&mSelectMapList.size()>0){
-        for (int i = 0; i <mSelectMapList.size() ; i++) {
-            sb.append(String.valueOf(mSelectMapList.get(i).get("key"))+",");
+        if (mMultiSelectMapListOutter!=null&&mMultiSelectMapListOutter.size()>0){
+        for (int i = 0; i <mMultiSelectMapListOutter.size() ; i++) {
+            if (Boolean.parseBoolean(String.valueOf(mMultiSelectMapListOutter.get(i).get("checked")))) {
+                sb.append(String.valueOf(mMultiSelectMapListOutter.get(i).get("key")) + ",");
+            }
         }
         }
-        selectKey=sb.toString();
+        selectedKeys=sb.toString();
         //去掉最后一个","
-        selectKey=selectKey.substring(0,selectKey.length()-1);//从beginIndex开始取，到endIndex结束，从0开始数，其中不包括endIndex位置的字符
-        return selectKey;
+        if(selectedKeys.length()>0) {
+            selectedKeys = selectedKeys.substring(0, selectedKeys.length() - 1);//从beginIndex开始取，到endIndex结束，从0开始数，其中不包括endIndex位置的字符
+        }
+        return selectedKeys;
 
     }
 
-    /**
-     * 设置已选的key  如果有setupMultiSelectMapListOutter  在其后调用
-     * @param selectedKeys
-     */
-    public void  setupSelectedKey(String[] selectedKeys) {
+
+    private void  setupSelectedKey(String[] selectedKeys) {
         List<String> strList= Arrays.asList(selectedKeys);
         List<Map<String,Object>> multiSelectMapListOutter_temp=new ArrayList<>();
             for (int j = 0; j < mMultiSelectMapListOutter.size(); j++) {
@@ -231,6 +237,15 @@ public class MultiSelectView extends LinearLayout implements View.OnClickListene
         }
         mMultiSelectViewRecycleViewAdapter.updateDate(multiSelectMapListOutter_temp);
     }
-
-
+    /**
+     * 设置已选的key  如果有setupMultiSelectMapListOutter  在其后调用
+     * @param selectedKeyStr
+     */
+    public void setupSelectedKeyStr(String selectedKeyStr){
+        if (selectedKeyStr==null||selectedKeyStr.equals("") || selectedKeyStr.equals("null")){
+            return;
+        }
+        String[] selectedKeys=selectedKeyStr.split(",");
+        this.setupSelectedKey(selectedKeys);
+    }
 }

@@ -52,7 +52,7 @@ public class MultiSelectLayout extends RelativeLayout {
          id_tv_select_all = (TextView) view.findViewById(R.id.id_tv_select_all);
          id_tv_back_select_all = (TextView) view.findViewById(R.id.id_tv_back_select_all);
          id_tv_title = (TextView) view.findViewById(R.id.id_tv_title);
-         id_tv_title.setText("选项(0)");
+        id_tv_title.setText("选项(0)");
 
 
         initMultiSelectView();
@@ -60,20 +60,19 @@ public class MultiSelectLayout extends RelativeLayout {
         id_tv_select_all.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                int count=0;
                 if (!mMultiSelectViewAdapter.isAllSeleted()) {
-                     count = mMultiSelectViewAdapter.seletAll();
+                     mMultiSelectViewAdapter.seletAll();
                 }else{
-                     count = mMultiSelectViewAdapter.unSeletAll();
+                     mMultiSelectViewAdapter.unSeletAll();
                 }
-                id_tv_title.setText("选项(" + count + ")");
+                refreshTextData();
             }
         });
         id_tv_back_select_all.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                int count=mMultiSelectViewAdapter.backSelet();
-                id_tv_title.setText("选项("+count+")");
+                mMultiSelectViewAdapter.backSelet();
+                refreshTextData();
             }
         });
 
@@ -106,19 +105,26 @@ public class MultiSelectLayout extends RelativeLayout {
         id_lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                int count=mMultiSelectViewAdapter.seletOne(view,position);
-                id_tv_title.setText("选项("+count+")");
+                mMultiSelectViewAdapter.seletOne(view,position);
+                refreshTextData();
             }
         });
     }
     public void setupMultiSelectMapList(List<Map<String, Object>> multiSelectMapList) {
         mMultiSelectViewAdapter.updateMultiSelectMapListInner(multiSelectMapList);
+        refreshTextData();
     }
-  /*  public void  setupSeletedItemMapList( List<Map<String, Object>> seletedItemMapList){
-        mMapList.clear();
-        mMapList.addAll(seletedItemMapList);
-        mMultiSelectViewAdapter.notifyDataSetChanged();
-    }*/
+
+    private void refreshTextData() {
+        int count = mMultiSelectViewAdapter.getCheckNum();
+        id_tv_title.setText("选项("+count+")");
+    }
+
+    /*  public void  setupSeletedItemMapList( List<Map<String, Object>> seletedItemMapList){
+          mMapList.clear();
+          mMapList.addAll(seletedItemMapList);
+          mMultiSelectViewAdapter.notifyDataSetChanged();
+      }*/
    public List<Map<String, Object>>  getMultiSelectMapList(){
         return  mMultiSelectViewAdapter.getMultiSelectMapListInner();
     }
