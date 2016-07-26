@@ -31,12 +31,11 @@ public class MultiSelectViewContentBaseAdapter extends BaseAdapter {
     private Context context;
     // 用来导入布局
     private LayoutInflater inflater = null;
+    int checkNum = 0;
 
     public int getCheckNum() {
         return checkNum<0?0:checkNum;
     }
-
-    int checkNum = 0;
 
     // 构造器
     public MultiSelectViewContentBaseAdapter(Context context, List<Map<String, Object>> multiSelectMapListInner) {

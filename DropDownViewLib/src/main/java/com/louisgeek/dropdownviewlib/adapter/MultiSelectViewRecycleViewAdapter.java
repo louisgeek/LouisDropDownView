@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * 可见的view适配器
  * Created by louisgeek on 2016/6/20.
  */
 public class MultiSelectViewRecycleViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{

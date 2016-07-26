@@ -75,7 +75,7 @@ public class DateTool {
 
 
     public static Date parseStr2Data(String dateStr,String formatStr){
-        Date date=null;
+        Date date=new Date();
         SimpleDateFormat sdf = new SimpleDateFormat(formatStr, Locale.CHINA);//Locale.SIMPLIFIED_CHINESE和Locale.CHINA一样
         try {
             date=sdf.parse(dateStr);

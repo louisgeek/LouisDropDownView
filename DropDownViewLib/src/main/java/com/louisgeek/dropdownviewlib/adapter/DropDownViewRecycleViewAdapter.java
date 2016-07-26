@@ -7,12 +7,14 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.louisgeek.dropdownviewlib.R;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -22,8 +24,8 @@ import java.util.Map;
 public class DropDownViewRecycleViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private  int itemWidth;
-
     private static final String TAG = "DropDownViewAdapter";
+    private Map<Integer,Boolean> mIntegerBooleanMap_StoreSelectedState=new HashMap<>();
 
     public void updateBackground(boolean showAbove,RecyclerView recyclerView) {
         List<Map<String, Object>> mNameStateListTemp=new ArrayList<>();
@@ -46,6 +48,12 @@ public class DropDownViewRecycleViewAdapter extends RecyclerView.Adapter<Recycle
     }
 
 
+ /*   public DropDownViewRecycleViewAdapter(Context context, List<Map<String, Object>> dataList, int itemWidth,boolean isMutiSelect) {
+        mContext = context;
+        this.mDataList = dataList;
+        this.itemWidth=itemWidth;
+        this.isMutiSelect=isMutiSelect;
+    }*/
     public DropDownViewRecycleViewAdapter(Context context, List<Map<String, Object>> dataList, int itemWidth) {
         mContext = context;
         this.mDataList = dataList;
@@ -67,7 +75,7 @@ public class DropDownViewRecycleViewAdapter extends RecyclerView.Adapter<Recycle
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         MyRecyclerViewHolder myRecyclerViewHolder = (MyRecyclerViewHolder) holder;
 
         if (mDataList.get(position).get("isShowAbove")!=null){
@@ -91,6 +99,7 @@ public class DropDownViewRecycleViewAdapter extends RecyclerView.Adapter<Recycle
 
     class MyRecyclerViewHolder extends RecyclerView.ViewHolder {
         TextView mTextView;
+        ImageView mImageView;
         LinearLayout id_ll_item;
         public MyRecyclerViewHolder(View itemView) {
             super(itemView);
@@ -102,11 +111,8 @@ public class DropDownViewRecycleViewAdapter extends RecyclerView.Adapter<Recycle
                     mOnItemViewClickListener.onItemViewClick(v,getAdapterPosition());
                 }
             });
+            mImageView= (ImageView) itemView.findViewById(R.id.id_iv);
         }
-
-
-
-
     }
 
     /**

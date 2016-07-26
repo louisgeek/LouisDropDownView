@@ -10,4 +10,6 @@
     <item type="id" name="hold_basename"/>
 
     <item type="id" name="hold_check_pos"/>
+
+    <item type="id" name="hold_selected_state"/>
 </resources>

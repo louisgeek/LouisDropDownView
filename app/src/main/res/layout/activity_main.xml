@@ -38,6 +38,17 @@
         android:id="@+id/id_msv"
         android:text="多选"
         android:layout_height="wrap_content"/>
+    <com.louisgeek.dropdownviewlib.MultiSelectView_HasChild
+        android:layout_below="@id/id_msv"
+        android:layout_width="wrap_content"
+        android:id="@+id/id_msv_gac"
+        android:text="多选"
+        android:layout_height="wrap_content"/>
 
+    <Button
+        android:id="@+id/id_btn"
+        android:layout_below="@id/id_msv_gac"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
 
 </RelativeLayout>

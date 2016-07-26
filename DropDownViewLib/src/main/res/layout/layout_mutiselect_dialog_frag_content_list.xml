@@ -78,6 +78,13 @@
         android:layout_below="@id/id_ll_tool"
         android:layout_height="wrap_content"
         />
+    <ExpandableListView
+        android:id="@+id/id_elv"
+        android:layout_above="@id/id_rl_mytool"
+        android:layout_width="match_parent"
+        android:layout_below="@id/id_ll_tool"
+        android:layout_height="wrap_content"
+        />
 
 
 </RelativeLayout>

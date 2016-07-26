@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--Code动态传入显示按钮的宽-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="horizontal"
+              android:id="@+id/id_ll_item"
+              android:gravity="center"
+              android:paddingTop="8dp"
+              android:background="@drawable/selector_shape_list_item_notop"
+              android:paddingBottom="8dp"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content">
+<TextView
+    android:id="@+id/id_tv"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="选项"
+
+    />
+    <ImageView
+        android:id="@+id/id_iv"
+        android:layout_width="wrap_content"
+        android:background="@drawable/selector_item_checked"
+        android:layout_height="wrap_content"/>
+
+</LinearLayout>

@@ -3,8 +3,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 >
-    <com.louisgeek.dropdownviewlib.MultiSelectLayout
-        android:id="@+id/id_msl"
+    <com.louisgeek.dropdownviewlib.MultiSelectLayout_HasChild
+        android:id="@+id/id_msl_gac"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 </RelativeLayout>

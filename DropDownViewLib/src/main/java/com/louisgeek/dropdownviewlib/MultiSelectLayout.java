@@ -5,6 +5,7 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ExpandableListView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -46,8 +47,9 @@ public class MultiSelectLayout extends RelativeLayout {
     private void init(Context context) {
         mContext=context;
 
-        View view = LayoutInflater.from(mContext).inflate(R.layout.layout_mutiselect_dialog_frag_list, this);
-
+        View view = LayoutInflater.from(mContext).inflate(R.layout.layout_mutiselect_dialog_frag_content_list, this);
+        ExpandableListView id_elv = (ExpandableListView) view.findViewById(R.id.id_elv);
+        id_elv.setVisibility(GONE);
          id_lv = (ListView) view.findViewById(R.id.id_lv);
          id_tv_select_all = (TextView) view.findViewById(R.id.id_tv_select_all);
          id_tv_back_select_all = (TextView) view.findViewById(R.id.id_tv_back_select_all);
@@ -125,9 +127,18 @@ public class MultiSelectLayout extends RelativeLayout {
           mMapList.addAll(seletedItemMapList);
           mMultiSelectViewAdapter.notifyDataSetChanged();
       }*/
-   public List<Map<String, Object>>  getMultiSelectMapList(){
+
+    /**
+     * 取到所有的(包括未选中的)
+     * @return
+     */
+    public List<Map<String, Object>>  getMultiSelectMapList(){
         return  mMultiSelectViewAdapter.getMultiSelectMapListInner();
     }
+    /**
+     * 取到所有的选中的
+     * @return
+     */
     public List<Map<String, Object>>  getSelectedMapList(){
         List<Map<String, Object>> multiSelectMapList=getMultiSelectMapList();
         List<Map<String, Object>> multiSelectMapListTemp=new ArrayList<>();
