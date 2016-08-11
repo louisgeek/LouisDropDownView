@@ -21,6 +21,7 @@
         />
 
     <com.louisgeek.dropdownviewlib.DateSelectView
+        android:layout_marginTop="10dp"
         android:id="@+id/id_dsv"
         android:layout_below="@+id/id_ddv"
         android:padding="10dp"
@@ -28,29 +29,34 @@
         android:layout_height="wrap_content"/>
 
     <com.louisgeek.dropdownviewlib.ProvinceCityAreaSelectView
+        android:layout_marginTop="10dp"
         android:id="@+id/id_pcsv"
         android:layout_width="wrap_content"
         android:layout_below="@id/id_dsv"
         android:layout_height="wrap_content"/>
-    <com.louisgeek.dropdownviewlib.MultiSelectView
+    <com.louisgeek.dropdownviewlib.ClassfiySeletView
+        android:layout_marginTop="10dp"
+        android:id="@+id/id_csv"
         android:layout_below="@id/id_pcsv"
+        android:padding="13dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <com.louisgeek.dropdownviewlib.MultiSelectView
+        android:layout_marginTop="10dp"
+        android:layout_below="@id/id_csv"
         android:layout_width="wrap_content"
         android:id="@+id/id_msv"
         android:text="多选"
         android:layout_height="wrap_content"/>
     <com.louisgeek.dropdownviewlib.MultiSelectView_HasChild
+        android:layout_marginTop="10dp"
         android:layout_below="@id/id_msv"
         android:layout_width="wrap_content"
         android:id="@+id/id_msv_gac"
         android:text="多选"
         android:layout_height="wrap_content"/>
 
-    <com.louisgeek.dropdownviewlib.ClassfiySeletView
-        android:id="@+id/id_csv"
-        android:layout_below="@id/id_msv_gac"
-        android:padding="13dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
    <!-- <Button
         android:id="@+id/id_btn"
         android:layout_below="@id/id_msv_gac"

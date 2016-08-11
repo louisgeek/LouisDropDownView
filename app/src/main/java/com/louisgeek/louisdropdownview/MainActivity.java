@@ -48,6 +48,11 @@ public class MainActivity extends AppCompatActivity {
             public void onContentViewDismiss() {
 
             }
+
+            @Override
+            public void onContentViewItemSeleted(String key, String name) {
+
+            }
         });
     }
 
