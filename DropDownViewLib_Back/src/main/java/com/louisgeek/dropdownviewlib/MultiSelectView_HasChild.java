@@ -18,7 +18,6 @@ import com.louisgeek.dropdownviewlib.adapter.MultiSelectViewRecycleViewAdapter;
 import com.louisgeek.dropdownviewlib.javabean.MultiSelectHasChildBean;
 import com.louisgeek.dropdownviewlib.javabean.ProCate;
 import com.louisgeek.dropdownviewlib.tools.MySSQTool;
-import com.louisgeek.dropdownviewlib.tools.SizeTool;
 import com.louisgeek.dropdownviewlib.ui.MutiSelectDialogFragment;
 
 import java.util.ArrayList;
@@ -88,9 +87,7 @@ public class MultiSelectView_HasChild extends LinearLayout implements View.OnCli
             id_ll_MultiSelectView.setLayoutParams(vlp);
         }else{
             Log.d(TAG, "dealLieAndHeight: XML");
-            //layout_height="100dp"
-            vlp.height= SizeTool.dp2px(mContext,100);
-            id_ll_MultiSelectView.setLayoutParams(vlp);
+            //xml 中配置下LinearLayout  android:layout_height="105dp"
         }
     }
 

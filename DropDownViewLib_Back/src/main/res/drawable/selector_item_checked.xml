@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+<item android:state_selected="true" android:drawable="@drawable/ic_check_light_green_700_48dp"></item>
+<item android:drawable="@drawable/ic_check_grey_700_48dp"></item>
+</selector>

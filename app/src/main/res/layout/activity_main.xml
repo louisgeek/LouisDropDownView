@@ -45,10 +45,18 @@
         android:text="多选"
         android:layout_height="wrap_content"/>
 
-    <Button
+    <com.louisgeek.dropdownviewlib.ClassfiySeletView
+        android:id="@+id/id_csv"
+        android:layout_below="@id/id_msv_gac"
+        android:padding="13dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+   <!-- <Button
         android:id="@+id/id_btn"
         android:layout_below="@id/id_msv_gac"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"/>-->
+
+
 
 </RelativeLayout>

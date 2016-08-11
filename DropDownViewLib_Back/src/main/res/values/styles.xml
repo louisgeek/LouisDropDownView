@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="selectDataViewAnimation" parent="@android:style/Animation">
+        <item name="android:windowEnterAnimation">@anim/popupwindow_bottom_in</item>
+        <item name="android:windowExitAnimation">@anim/popupwindow_bottom_out</item>
+    </style>
+</resources>

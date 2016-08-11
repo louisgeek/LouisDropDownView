@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                xmlns:tools="http://schemas.android.com/tools"
+                >
+    <LinearLayout
+        android:id="@+id/id_ll_title"
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:background="@drawable/shape_view"
+        android:padding="10dp"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/id_tv_title"
+            tools:text="选项(10)"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/id_ll_tool"
+        android:gravity="right"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/id_ll_title"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:id="@+id/id_tv_back_select_all"
+            android:layout_width="wrap_content"
+            android:padding="10dp"
+            android:layout_height="wrap_content"
+            android:text="反选" />
+        <TextView
+            android:id="@+id/id_tv_select_all"
+            android:layout_width="wrap_content"
+            android:padding="10dp"
+            android:layout_height="wrap_content"
+            android:text="全选" />
+
+
+
+    </LinearLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/id_rl_mytool"
+        android:padding="10dp"
+        android:layout_alignParentBottom="true"
+        android:gravity="right"
+        android:background="@drawable/shape_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/id_tv_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:text="取消"
+            />
+        <TextView
+            android:layout_toRightOf="@id/id_tv_cancel"
+            android:id="@+id/id_tv_ok"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:text="确认"
+            />
+    </RelativeLayout>
+    <!--顺序交换  写上layout_above最后一行防止被覆盖   -->
+    <ListView
+        android:id="@+id/id_lv"
+        android:layout_above="@id/id_rl_mytool"
+        android:layout_width="match_parent"
+        android:layout_below="@id/id_ll_tool"
+        android:layout_height="wrap_content"
+        />
+    <ExpandableListView
+        android:id="@+id/id_elv"
+        android:layout_above="@id/id_rl_mytool"
+        android:layout_width="match_parent"
+        android:layout_below="@id/id_ll_tool"
+        android:layout_height="wrap_content"
+        />
+
+
+</RelativeLayout>

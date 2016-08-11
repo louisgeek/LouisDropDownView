@@ -14,7 +14,6 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import com.louisgeek.dropdownviewlib.adapter.MultiSelectViewRecycleViewAdapter;
-import com.louisgeek.dropdownviewlib.tools.SizeTool;
 import com.louisgeek.dropdownviewlib.ui.MutiSelectDialogFragment;
 
 import java.util.ArrayList;
@@ -53,14 +52,12 @@ public class MultiSelectView extends LinearLayout implements View.OnClickListene
         //更新recyclerview外面的id_ll_MultiSelectView高度
         ViewGroup.LayoutParams vlp=id_ll_MultiSelectView.getLayoutParams();
         if (mMultiSelectMapListOutter.size()<=ONLY_SHOW_ROWS*nowShowColumns) {
-            Log.d(TAG, "dealLieAndHeight: WRAP_CONTENT ONLY_SHOW_ROWS："+ONLY_SHOW_ROWS+",nowShowColumns："+nowShowColumns);
+            Log.d(TAG, "dealLieAndHeight: WRAP_CONTENT");
             vlp.height=ViewGroup.LayoutParams.WRAP_CONTENT;
             id_ll_MultiSelectView.setLayoutParams(vlp);
         }else{
-            Log.d(TAG, "dealLieAndHeight: XML ONLY_SHOW_ROWS："+ONLY_SHOW_ROWS+",nowShowColumns："+nowShowColumns);
-            //layout_height="100dp"
-            vlp.height= SizeTool.dp2px(mContext,100);
-            id_ll_MultiSelectView.setLayoutParams(vlp);
+            Log.d(TAG, "dealLieAndHeight: XML");
+            //xml 中配置下LinearLayout  android:layout_height="105dp"
         }
     }
 

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item type="id" name="hold_dropdown_map"/>
+    <item type="id" name="hold_dropdown_key"/>
+
+    <item type="id" name="hold_id"/>
+    <item type="id" name="hold_userid"/>
+
+    <item type="id" name="hold_baseid"/>
+    <item type="id" name="hold_basename"/>
+
+    <item type="id" name="hold_check_pos"/>
+
+    <item type="id" name="hold_selected_state"/>
+</resources>
