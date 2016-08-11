@@ -25,8 +25,6 @@ public class ClassfiySeletView extends TextView implements View.OnClickListener{
     ClassfiySeletPopupWindow myPopupwindow;
     String mDefaultKey="";
     String mShowName="";
-    int mListMaxHeight;
-    public final String DEFAULT_NAME="全部分类";
     public ClassfiySeletView(Context context) {
         this(context,null,0);
     }
@@ -48,13 +46,9 @@ public class ClassfiySeletView extends TextView implements View.OnClickListener{
         mClassfiyBeanList.addAll(classfiyBeanList);
     }
 
-    public void setListMaxHeight(int listMaxHeight) {
-        mListMaxHeight = listMaxHeight;
-    }
-
     private void initInnerData() {
         mClassfiyBeanList=new ArrayList<>();
-        for (int i = 0; i <15 ; i++) {
+        for (int i = 0; i <10 ; i++) {
             ClassfiyBean classfiyBean=new ClassfiyBean();
             classfiyBean.setID(i);
             classfiyBean.setBeanID("key_"+i);
@@ -77,7 +71,7 @@ public class ClassfiySeletView extends TextView implements View.OnClickListener{
     }
     private void initView() {
         if (this.getText()==null||this.getText().equals("")||this.getText().equals("null")) {
-            this.setText(DEFAULT_NAME);
+            this.setText("请选择");
         }
         if (this.getPaddingTop()==0&&this.getPaddingBottom()==0&&this.getPaddingLeft()==0&&this.getPaddingRight()==0) {
             int paddingLeft_Right = SizeTool.dp2px(mContext, 8);
@@ -86,7 +80,7 @@ public class ClassfiySeletView extends TextView implements View.OnClickListener{
         }
         this.setOnClickListener(this);
         this.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.ic_keyboard_arrow_down_blue_grey_400_18dp,0);
-       //## this.setBackgroundResource(R.drawable.shape_list);
+        this.setBackgroundResource(R.drawable.shape_list);
         this.setSingleLine();
     }
 
@@ -102,7 +96,7 @@ public class ClassfiySeletView extends TextView implements View.OnClickListener{
         if (v.getTag()!=null){
             mDefaultKey= String.valueOf(v.getTag());
         }
-         myPopupwindow=new ClassfiySeletPopupWindow(mContext,mClassfiyBeanList,mDefaultKey,mListMaxHeight);
+         myPopupwindow=new ClassfiySeletPopupWindow(mContext,mClassfiyBeanList,mDefaultKey);
 
       //  myPopupwindow.set
 
@@ -118,7 +112,6 @@ public class ClassfiySeletView extends TextView implements View.OnClickListener{
             public void onItemSelected(String key, String name) {
                 ClassfiySeletView.this.setText(name);
                 ClassfiySeletView.this.setTag(key);
-                onContentViewChangeListener.onContentViewItemSeleted(key,name);
             }
         });
         myPopupwindow.showAsDropDown(v);
@@ -151,7 +144,6 @@ public class ClassfiySeletView extends TextView implements View.OnClickListener{
     public  interface  OnContentViewChangeListener{
         void onContentViewShow();
         void onContentViewDismiss();
-        void onContentViewItemSeleted(String key, String name);
     }
 
     public void setOnContentViewChangeListener(OnContentViewChangeListener onContentViewChangeListener) {
