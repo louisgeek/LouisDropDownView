@@ -55,13 +55,15 @@ public class MyRecylerViewLeftAdapter extends RecyclerView.Adapter<RecyclerView.
         for (int i = 0; i < mClassfiyBeanList.size(); i++) {
             mClassfiyBeanList.get(i).setSelected(false);
         }
-        this.notifyDataSetChanged();
+        //this.notifyDataSetChanged();
+        this.notifyItemRangeChanged(0,getItemCount());
     }
     public void setSelectedState(int position){
         clearAllSelectedState();
         mClassfiyBeanList.get(position).setSelected(true);
         //selectedStateMap.put(position,true);
-        this.notifyDataSetChanged();
+        //this.notifyDataSetChanged();
+        this.notifyItemChanged(position);
     }
     private  boolean  getSeletedState(int position){
       boolean isSelected=mClassfiyBeanList.get(position).isSelected();

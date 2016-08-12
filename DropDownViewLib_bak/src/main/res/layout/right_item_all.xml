@@ -26,7 +26,6 @@
     <TextView
         android:layout_marginLeft="15dp"
         android:id="@+id/id_tv_count"
-        android:text="22"
         android:textColor="@drawable/selector_item_text"
         android:layout_gravity="right|center_horizontal"
         android:layout_width="wrap_content"

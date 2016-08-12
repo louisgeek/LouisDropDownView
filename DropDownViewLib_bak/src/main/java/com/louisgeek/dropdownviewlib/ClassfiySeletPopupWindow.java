@@ -31,14 +31,16 @@ public class ClassfiySeletPopupWindow extends PopupWindow{
     int childPos=-1;
     String key_parent="";
     String key_child="";
+    int mListMaxHeight;
     MyRecylerViewLeftAdapter myRecylerViewAdapter;
     MyRecylerViewRightAdapter myRecylerViewRightAdapter;
     String mDefaultKey="";
-    public ClassfiySeletPopupWindow(Context context,List<ClassfiyBean> classfiyBeanList,String defaultKey) {
+    public ClassfiySeletPopupWindow(Context context,List<ClassfiyBean> classfiyBeanList,String defaultKey,int listMaxHeight) {
         super(context);
         mContext=context;
         mClassfiyBeanList=classfiyBeanList;
         mDefaultKey=defaultKey;
+        mListMaxHeight=listMaxHeight;
         Log.d(TAG, "dealDefaultKey: mDefaultKey:"+mDefaultKey);
         dealDefaultKey();
         initView();
@@ -96,7 +98,7 @@ public class ClassfiySeletPopupWindow extends PopupWindow{
             @Override
             public void onItemClick(View v,int pos) {
                 myRecylerViewRightAdapter.updateParentPos(pos);
-               // myRecylerViewRightAdapter.clearTheAllAndNormalSelectedState();
+                myRecylerViewRightAdapter.clearTheAllAndNormalSelectedState();
                 //每次点击选中右边的
               // myRecylerViewRightAdapter.setTheAllSelectedState(pos);
                 Log.d(TAG, "QQQ onItemClick: pp pos:"+pos);
@@ -148,7 +150,34 @@ public class ClassfiySeletPopupWindow extends PopupWindow{
         }else if (childPos>-1){
             myRecylerViewRightAdapter.setNormalSelectedState(childPos);
         }
-
+        if (mListMaxHeight>0) {
+//===============================
+            ViewGroup.LayoutParams vlp_left = id_rv_left.getLayoutParams();
+            ViewGroup.LayoutParams vlp_right = id_rv_right.getLayoutParams();
+            /**
+             * 手动测量
+             */
+            int widthMeasureSpec = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
+            int heightMeasureSpec = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
+            id_rv_left.measure(widthMeasureSpec, heightMeasureSpec);
+            id_rv_right.measure(widthMeasureSpec, heightMeasureSpec);
+            // int width = id_rv_left.getMeasuredWidth();
+            int left_height = id_rv_left.getMeasuredHeight();
+            int right_height = id_rv_right.getMeasuredHeight();
+            Log.d(TAG, "initView: left_height:" + left_height);
+            Log.d(TAG, "initView: right_height:" + right_height);
+            Log.d(TAG, "initView: mListMaxHeight:" + mListMaxHeight);
+            int maxHeight = Math.max(left_height, right_height);
+            if (maxHeight > mListMaxHeight) {
+                maxHeight = mListMaxHeight;
+            }
+            Log.d(TAG, "initView: maxHeight:" + maxHeight);
+            vlp_left.height = maxHeight;
+            vlp_right.height = maxHeight;
+            id_rv_left.setLayoutParams(vlp_left);
+            id_rv_right.setLayoutParams(vlp_right);
+            //===============================
+        }
         //设置PopupWindow的View
         this.setContentView(view);
         //设置PopupWindow弹出窗体的宽
