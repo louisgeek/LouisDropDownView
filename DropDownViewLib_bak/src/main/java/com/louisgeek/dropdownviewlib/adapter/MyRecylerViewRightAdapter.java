@@ -123,7 +123,7 @@ public class MyRecylerViewRightAdapter extends RecyclerView.Adapter<RecyclerView
 
     }
 
-    public void  updateParentPos(int parentPos){
+    public void updateParentPos(int parentPos){
         this.parentPos=parentPos;
         this.notifyDataSetChanged();
     }
@@ -137,22 +137,25 @@ public class MyRecylerViewRightAdapter extends RecyclerView.Adapter<RecyclerView
             mClassfiyBeanList.get(parentPos).getChildClassfiyBeanList().get(i).setSelected(false);
         }
         this.notifyDataSetChanged();
+        // this.notifyItemRangeChanged(0,getItemCount());//不包括pos==0
     }
     public void setNormalSelectedState(int position){
         clearTheAllAndNormalSelectedState();
         mClassfiyBeanList.get(parentPos).getChildClassfiyBeanList().get(position).setSelected(true);
         this.notifyDataSetChanged();
+        // this.notifyItemRangeChanged(0,getItemCount());
     }
     private  boolean  getNormalSeletedState(int position){
         boolean isSelected=mClassfiyBeanList.get(parentPos).getChildClassfiyBeanList().get(position).isSelected();
         return isSelected;
     }
     public void clearTheAllSelectedState(){
-       for (int key : theAllSelectedStateMap.keySet()) {
-               // System.out.println("key= "+ key + " and value= " + map.get(key));
-              theAllSelectedStateMap.put(key,false);
+        for (int key : theAllSelectedStateMap.keySet()) {
+            // System.out.println("key= "+ key + " and value= " + map.get(key));
+            theAllSelectedStateMap.put(key,false);
         }
         this.notifyDataSetChanged();
+        // this.notifyItemRangeChanged(0,getItemCount());
     }
     public void clearTheAllAndNormalSelectedState(){
         clearNormalSelectedState();
@@ -163,6 +166,7 @@ public class MyRecylerViewRightAdapter extends RecyclerView.Adapter<RecyclerView
 
         theAllSelectedStateMap.put(parentPos,true);
         this.notifyDataSetChanged();
+        //this.notifyItemRangeChanged(0,getItemCount());
     }
     private  boolean  getTheAllSeletedState(int  parentPos){
         boolean isSelect=false;

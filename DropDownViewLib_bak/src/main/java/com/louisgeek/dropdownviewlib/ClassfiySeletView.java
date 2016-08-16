@@ -86,7 +86,7 @@ public class ClassfiySeletView extends TextView implements View.OnClickListener{
         }
         this.setOnClickListener(this);
         this.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.ic_keyboard_arrow_down_blue_grey_400_18dp,0);
-        this.setBackgroundResource(R.drawable.shape_list);
+       //## this.setBackgroundResource(R.drawable.shape_list);
         this.setSingleLine();
     }
 

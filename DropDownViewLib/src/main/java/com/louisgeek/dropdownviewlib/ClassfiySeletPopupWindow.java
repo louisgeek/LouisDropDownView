@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.PopupWindow;
 
 import com.louisgeek.dropdownviewlib.adapter.MyRecylerViewLeftAdapter;
+import com.louisgeek.dropdownviewlib.adapter.MyRecylerViewOnlyOneAdapter;
 import com.louisgeek.dropdownviewlib.adapter.MyRecylerViewRightAdapter;
 import com.louisgeek.dropdownviewlib.javabean.ClassfiyBean;
 import com.yqritc.recyclerviewflexibledivider.HorizontalDividerItemDecoration;
@@ -24,6 +25,7 @@ public class ClassfiySeletPopupWindow extends PopupWindow{
 
     private static final String TAG = "ClassfiySeletPopWin";
     public static final String CUT_TAG = "tuc";
+
     Context mContext;
     List<ClassfiyBean> mClassfiyBeanList;
     //List<ClassfiyBean.ChildClassfiyBean> mChildClassfiyBeanList;
@@ -32,9 +34,13 @@ public class ClassfiySeletPopupWindow extends PopupWindow{
     String key_parent="";
     String key_child="";
     int mListMaxHeight;
+    RecyclerView id_rv_left;
+    RecyclerView id_rv_right;
     MyRecylerViewLeftAdapter myRecylerViewAdapter;
     MyRecylerViewRightAdapter myRecylerViewRightAdapter;
+    MyRecylerViewOnlyOneAdapter myRecylerViewOnlyOneAdapter;
     String mDefaultKey="";
+    boolean mOnlyOneList=false;
     public ClassfiySeletPopupWindow(Context context,List<ClassfiyBean> classfiyBeanList,String defaultKey,int listMaxHeight) {
         super(context);
         mContext=context;
@@ -48,7 +54,7 @@ public class ClassfiySeletPopupWindow extends PopupWindow{
 
     private void dealDefaultKey() {
         if (mDefaultKey==null||mDefaultKey.equals("")){
-            return ;
+            return;
         }
 
         if (mDefaultKey.contains(ClassfiySeletPopupWindow.CUT_TAG)){
@@ -59,24 +65,28 @@ public class ClassfiySeletPopupWindow extends PopupWindow{
                     key_child=keys[1];
                 }
             }
+        }else{
+            //单个列表
+            key_parent=mDefaultKey;
         }
-        if (key_parent.equals("")||key_child.equals("")){
-            return ;
-        }
-        for (int i = 0; i < mClassfiyBeanList.size(); i++) {
-            if (key_parent.equals(mClassfiyBeanList.get(i).getBeanID())){
-                parentPos=i;
-                break;
+        if (!key_parent.equals("")){
+            for (int i = 0; i < mClassfiyBeanList.size(); i++) {
+                if (key_parent.equals(mClassfiyBeanList.get(i).getBeanID())){
+                    parentPos=i;
+                    break;
+                }
             }
         }
-        if (parentPos>-1){
-        List<ClassfiyBean.ChildClassfiyBean> cbccbs=mClassfiyBeanList.get(parentPos).getChildClassfiyBeanList();
-        for (int j = 0; j < cbccbs.size(); j++) {
-            if (key_child.equals(cbccbs.get(j).getBeanID())){
-                childPos=j;
-                break;
+        if (!key_child.equals("")){
+            if (parentPos>-1){
+                List<ClassfiyBean.ChildClassfiyBean> cbccbs=mClassfiyBeanList.get(parentPos).getChildClassfiyBeanList();
+                for (int j = 0; j < cbccbs.size(); j++) {
+                    if (key_child.equals(cbccbs.get(j).getBeanID())){
+                        childPos=j;
+                        break;
+                    }
+                }
             }
-        }
         }
 
         Log.d(TAG, "dealDefaultKey: parentPos:"+parentPos);
@@ -86,73 +96,104 @@ public class ClassfiySeletPopupWindow extends PopupWindow{
 
     private void initView() {
 
+        /**
+         * //单个列表
+         */
+        if (mClassfiyBeanList!=null&&mClassfiyBeanList.size()>0){
+            if(mClassfiyBeanList.get(0).getChildClassfiyBeanList()==null||mClassfiyBeanList.get(0).getChildClassfiyBeanList().size()==0){
+                mOnlyOneList=true;
+            }
+        }
 
         View view= LayoutInflater.from(mContext).inflate(R.layout.layout_popupwindow_selectview,null);
-        RecyclerView id_rv_left = (RecyclerView) view.findViewById(R.id.id_rv_left);
-        RecyclerView id_rv_right = (RecyclerView) view.findViewById(R.id.id_rv_right);
-        id_rv_left.addItemDecoration(new HorizontalDividerItemDecoration.Builder(mContext).build());
-        id_rv_right.addItemDecoration(new HorizontalDividerItemDecoration.Builder(mContext).build());
-
-        myRecylerViewAdapter=new MyRecylerViewLeftAdapter(mClassfiyBeanList);
-        myRecylerViewAdapter.setOnItemClickListener(new MyRecylerViewLeftAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(View v,int pos) {
-                myRecylerViewRightAdapter.updateParentPos(pos);
-                myRecylerViewRightAdapter.clearTheAllAndNormalSelectedState();
-                //每次点击选中右边的
-              // myRecylerViewRightAdapter.setTheAllSelectedState(pos);
-                Log.d(TAG, "QQQ onItemClick: pp pos:"+pos);
-            }
-        });
-        id_rv_left.setAdapter(myRecylerViewAdapter);
+        id_rv_left=(RecyclerView) view.findViewById(R.id.id_rv_left);
         id_rv_left.setHasFixedSize(true);//位置固定大小 //2016年8月12日16:41:18  这里的用意：不用的话点击后面的item 然后马上会滚动一段，因为如果item的内容会改变view布局大小
         id_rv_left.setLayoutManager(new LinearLayoutManager(mContext));
-        Log.d(TAG, "initView: parentPos:"+parentPos);
-        if (parentPos>-1){
-            myRecylerViewAdapter.setSelectedState(parentPos);
-        }else{
-            //什么都没选的时候  选中left第一个
-            myRecylerViewAdapter.setSelectedState(0);
+        if (mOnlyOneList){
+            id_rv_left.addItemDecoration(new HorizontalDividerItemDecoration.Builder(mContext).build());
+            myRecylerViewOnlyOneAdapter=new MyRecylerViewOnlyOneAdapter(mClassfiyBeanList);
+            myRecylerViewOnlyOneAdapter.setOnItemClickListener(new MyRecylerViewOnlyOneAdapter.OnItemClickListener() {
+                @Override
+                public void onItemClick(View v, int pos) {
+                    onItemSelectedListener.onItemSelected(mClassfiyBeanList.get(pos).getBeanID(), mClassfiyBeanList.get(pos).getName());
+                    ClassfiySeletPopupWindow.this.dismiss();
+                }
+            });
+            id_rv_left.setAdapter(myRecylerViewOnlyOneAdapter);
+            if (parentPos > -1) {
+                myRecylerViewOnlyOneAdapter.setSelectedState(parentPos);
+            } else {
+                //什么都没选的时候  选中left第一个
+                //### myRecylerViewOnlyOneAdapter.setSelectedState(0);          //单个列表不选中
+            }
+        }else {
+            id_rv_left.addItemDecoration(new HorizontalDividerItemDecoration.Builder(mContext).build());
+            myRecylerViewAdapter = new MyRecylerViewLeftAdapter(mClassfiyBeanList);
+            myRecylerViewAdapter.setOnItemClickListener(new MyRecylerViewLeftAdapter.OnItemClickListener() {
+                @Override
+                public void onItemClick(View v, int pos) {
+                    myRecylerViewRightAdapter.updateParentPos(pos);
+                    //myRecylerViewRightAdapter.clearTheAllAndNormalSelectedState();
+                    //每次点击选中右边的
+                    // myRecylerViewRightAdapter.setTheAllSelectedState(pos);
+                    Log.d(TAG, "QQQ onItemClick: pp pos:" + pos);
+                }
+            });
+            id_rv_left.setAdapter(myRecylerViewAdapter);
+            Log.d(TAG, "initView: parentPos:" + parentPos);
+            if (parentPos > -1) {
+                myRecylerViewAdapter.setSelectedState(parentPos);
+            } else {
+                //什么都没选的时候  选中left第一个
+                myRecylerViewAdapter.setSelectedState(0);
+            }
         }
 
+        id_rv_right = (RecyclerView) view.findViewById(R.id.id_rv_right);
+        if (mOnlyOneList){
+            id_rv_right.setVisibility(View.GONE);
+        }else{
+            id_rv_right.setVisibility(View.VISIBLE);
+            myRecylerViewRightAdapter = new MyRecylerViewRightAdapter(mClassfiyBeanList, parentPos < 0 ? 0 : parentPos);
+            //  mChildClassfiyBeanList=new ArrayList<>(mClassfiyBeanList.get(0).getChildClassfiyBeanList());
+            myRecylerViewRightAdapter.setOnItemClickListener(new MyRecylerViewRightAdapter.OnItemClickListener() {
 
-        myRecylerViewRightAdapter=new MyRecylerViewRightAdapter(mClassfiyBeanList,parentPos<0?0:parentPos);
-        //  mChildClassfiyBeanList=new ArrayList<>(mClassfiyBeanList.get(0).getChildClassfiyBeanList());
-        myRecylerViewRightAdapter.setOnItemClickListener(new MyRecylerViewRightAdapter.OnItemClickListener() {
+                @Override
+                public void onItemClickNormal(View v, List<ClassfiyBean> classfiyBeanList, int parentPos, int childPos) {
+                    List<ClassfiyBean.ChildClassfiyBean> childClassfiyBeanList = classfiyBeanList.get(parentPos).getChildClassfiyBeanList();
+                    //Toast.makeText(mContext, "xxx parentPos:"+parentPos+",child name:"+childClassfiyBeanList.get(childPos).getName(), Toast.LENGTH_SHORT).show();
+                    Log.d(TAG, "QQQ onItemClickNormal: parentPos:" + parentPos + ",childPos:" + childPos);
+                    String key = classfiyBeanList.get(parentPos).getBeanID() + CUT_TAG + childClassfiyBeanList.get(childPos).getBeanID();
+                    onItemSelectedListener.onItemSelected(key, childClassfiyBeanList.get(childPos).getName());
+                    ClassfiySeletPopupWindow.this.dismiss();
 
-            @Override
-            public void onItemClickNormal(View v, List<ClassfiyBean> classfiyBeanList, int parentPos, int childPos) {
-                List<ClassfiyBean.ChildClassfiyBean>  childClassfiyBeanList=classfiyBeanList.get(parentPos).getChildClassfiyBeanList();
-                //Toast.makeText(mContext, "xxx parentPos:"+parentPos+",child name:"+childClassfiyBeanList.get(childPos).getName(), Toast.LENGTH_SHORT).show();
-                Log.d(TAG, "QQQ onItemClickNormal: parentPos:"+parentPos+",childPos:"+childPos);
-                String key=classfiyBeanList.get(parentPos).getBeanID()+CUT_TAG+childClassfiyBeanList.get(childPos).getBeanID();
-                onItemSelectedListener.onItemSelected(key,childClassfiyBeanList.get(childPos).getName());
-                ClassfiySeletPopupWindow.this.dismiss();
+                    Log.d(TAG, "fff onItemClickNormal: key:" + key);
+                }
 
-                Log.d(TAG, "fff onItemClickNormal: key:"+key);
+
+                @Override
+                public void onItemClickAll(View v, List<ClassfiyBean> classfiyBeanList, int parentPos) {
+                    //Toast.makeText(mContext, "xxx parentPos:"+parentPos+",parent name:"+classfiyBeanList.get(parentPos).getName(), Toast.LENGTH_SHORT).show();
+                    Log.d(TAG, "QQQ onItemClickAll:  parentPos:" + parentPos);
+                    String key = classfiyBeanList.get(parentPos).getBeanID() + CUT_TAG + "-1";
+                    onItemSelectedListener.onItemSelected(key, v.getTag() + classfiyBeanList.get(parentPos).getName());
+                    ClassfiySeletPopupWindow.this.dismiss();
+
+                    Log.d(TAG, "fff onItemClickAll: key:" + key);
+                }
+            });
+            id_rv_right.setAdapter(myRecylerViewRightAdapter);
+            id_rv_right.setLayoutManager(new LinearLayoutManager(mContext));
+            if (childPos == -1) {
+                myRecylerViewRightAdapter.setTheAllSelectedState(parentPos);
+            } else if (childPos > -1) {
+                myRecylerViewRightAdapter.setNormalSelectedState(childPos);
             }
 
 
-            @Override
-            public void onItemClickAll(View v, List<ClassfiyBean> classfiyBeanList, int parentPos) {
-                //Toast.makeText(mContext, "xxx parentPos:"+parentPos+",parent name:"+classfiyBeanList.get(parentPos).getName(), Toast.LENGTH_SHORT).show();
-                Log.d(TAG, "QQQ onItemClickAll:  parentPos:"+parentPos);
-                String key=classfiyBeanList.get(parentPos).getBeanID()+CUT_TAG+"-1";
-                onItemSelectedListener.onItemSelected(key,v.getTag()+classfiyBeanList.get(parentPos).getName());
-                ClassfiySeletPopupWindow.this.dismiss();
-
-                Log.d(TAG, "fff onItemClickAll: key:"+key);
-            }
-        });
-        id_rv_right.setAdapter(myRecylerViewRightAdapter);
-        id_rv_right.setLayoutManager(new LinearLayoutManager(mContext));
-        if (childPos==-1){
-            myRecylerViewRightAdapter.setTheAllSelectedState(parentPos);
-        }else if (childPos>-1){
-            myRecylerViewRightAdapter.setNormalSelectedState(childPos);
         }
         if (mListMaxHeight>0) {
-//===============================
+            //===============================
             ViewGroup.LayoutParams vlp_left = id_rv_left.getLayoutParams();
             ViewGroup.LayoutParams vlp_right = id_rv_right.getLayoutParams();
             /**
@@ -179,6 +220,7 @@ public class ClassfiySeletPopupWindow extends PopupWindow{
             id_rv_right.setLayoutParams(vlp_right);
             //===============================
         }
+
         //设置PopupWindow的View
         this.setContentView(view);
         //设置PopupWindow弹出窗体的宽
@@ -190,8 +232,9 @@ public class ClassfiySeletPopupWindow extends PopupWindow{
         //id_pop_tv.setOnClickListener(this);
     }
 
+
     public  interface  OnItemSelectedListener{
-        void  onItemSelected(String key, String name);
+        void  onItemSelected(String key,String name);
     }
 
     public void setOnItemSelectedListener(OnItemSelectedListener onItemSelectedListener) {

@@ -105,6 +105,7 @@ public class ClassfiySeletPopupWindow extends PopupWindow{
             }
         });
         id_rv_left.setAdapter(myRecylerViewAdapter);
+        id_rv_left.setHasFixedSize(true);//位置固定大小 //2016年8月12日16:41:18  这里的用意：不用的话点击后面的item 然后马上会滚动一段，因为如果item的内容会改变view布局大小
         id_rv_left.setLayoutManager(new LinearLayoutManager(mContext));
         Log.d(TAG, "initView: parentPos:"+parentPos);
         if (parentPos>-1){
@@ -188,15 +189,6 @@ public class ClassfiySeletPopupWindow extends PopupWindow{
         this.setFocusable(true);//设置后  达到返回按钮先消失popupWindow
         //id_pop_tv.setOnClickListener(this);
     }
-
-
-    public void refreshData(List<ClassfiyBean> classfiyBeanList) {
-        mClassfiyBeanList.clear();
-        mClassfiyBeanList.addAll(classfiyBeanList);
-        myRecylerViewAdapter.notifyDataSetChanged();
-        myRecylerViewRightAdapter.notifyDataSetChanged();
-    }
-
 
     public  interface  OnItemSelectedListener{
         void  onItemSelected(String key, String name);

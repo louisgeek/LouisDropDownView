@@ -4,6 +4,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.louisgeek.dropdownviewlib.R;
@@ -14,18 +15,18 @@ import java.util.List;
 /**
  * Created by louisgeek on 2016/8/9.
  */
-public class MyRecylerViewLeftAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class MyRecylerViewOnlyOneAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
    // private Map<Integer,Boolean> selectedStateMap=new HashMap<>();
     private List<ClassfiyBean> mClassfiyBeanList;
   //  int mParentSelectedPos;
-    public MyRecylerViewLeftAdapter(List<ClassfiyBean> classfiyBeanList) {
+    public MyRecylerViewOnlyOneAdapter(List<ClassfiyBean> classfiyBeanList) {
         mClassfiyBeanList = classfiyBeanList;
       //  mParentSelectedPos=parentSelectedPos;
     }
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-       View view=LayoutInflater.from(parent.getContext()).inflate(R.layout.left_item,parent,false);
+       View view=LayoutInflater.from(parent.getContext()).inflate(R.layout.item,parent,false);
         return new MyRecyclerViewViewHolder(view);
     }
 
@@ -33,7 +34,6 @@ public class MyRecylerViewLeftAdapter extends RecyclerView.Adapter<RecyclerView.
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         MyRecyclerViewViewHolder myRecyclerViewViewHolder= (MyRecyclerViewViewHolder) holder;
         myRecyclerViewViewHolder.mTextViewName.setText(mClassfiyBeanList.get(position).getName());
-        myRecyclerViewViewHolder.mTextViewCount.setText(""+mClassfiyBeanList.get(position).getChildClassfiyBeanList().size());
         myRecyclerViewViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -42,7 +42,11 @@ public class MyRecylerViewLeftAdapter extends RecyclerView.Adapter<RecyclerView.
             }
         });
         myRecyclerViewViewHolder.itemView.setSelected(getSeletedState(position));
-
+        if (myRecyclerViewViewHolder.itemView.isSelected()){
+            myRecyclerViewViewHolder.id_iv_icon.setVisibility(View.VISIBLE);
+        }else{
+            myRecyclerViewViewHolder.id_iv_icon.setVisibility(View.INVISIBLE);
+        }
 
     }
 
@@ -56,7 +60,7 @@ public class MyRecylerViewLeftAdapter extends RecyclerView.Adapter<RecyclerView.
             mClassfiyBeanList.get(i).setSelected(false);
         }
         //this.notifyDataSetChanged();
-        this.notifyItemRangeChanged(0,getItemCount());
+         this.notifyItemRangeChanged(0,getItemCount());
     }
     public void setSelectedState(int position){
         clearAllSelectedState();
@@ -74,12 +78,12 @@ public class MyRecylerViewLeftAdapter extends RecyclerView.Adapter<RecyclerView.
 
         TextView mTextViewName;
         TextView mTextViewCount;
-
+       ImageView id_iv_icon;
         public MyRecyclerViewViewHolder(View itemView) {
             super(itemView);
             mTextViewName= (TextView) itemView.findViewById(R.id.id_tv_name);
-
             mTextViewCount= (TextView) itemView.findViewById(R.id.id_tv_count);
+            id_iv_icon= (ImageView) itemView.findViewById(R.id.id_iv_icon);
         }
     }
 
