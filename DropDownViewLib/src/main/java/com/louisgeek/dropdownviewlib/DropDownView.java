@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.louisgeek.dropdownviewlib.tools.SizeTool;
+import com.louisgeek.dropdownviewlib.tools.StringTool;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -88,7 +89,7 @@ private  Context mContext;
 
     private void init(Context context) {
         mContext=context;
-        if (this.getText()==null||this.getText().equals("")||this.getText().equals("null")) {
+        if (this.getText()==null||StringTool.isNullOrNullStrOrBlankStr(this.getText().toString())) {
             this.setText("请选择");
         }
         defaultText=this.getText().toString();//
@@ -222,7 +223,7 @@ private  Context mContext;
      */
     public String  getSelectKey() {
         String key="";
-        if (this.getText()==null||this.getText().equals("")||this.getText().equals("null")||this.getText().toString().trim().equals("")) {
+        if (this.getText()==null||StringTool.isNullOrNullStrOrBlankStr(this.getText().toString()) ) {
            //
         }else{
             key=this.getKeyByName(this.getText().toString());
@@ -235,7 +236,7 @@ private  Context mContext;
      */
     public String  getSelectName() {
         String name="";
-        if (this.getText()==null||this.getText().equals("")||this.getText().equals("null")||this.getText().toString().trim().equals("")||this.getText().equals("请选择")) {
+        if (this.getText()==null||StringTool.isNullOrNullStrOrBlankStr(this.getText().toString()) ||this.getText().toString().equals("请选择")) {
             name="";
         }else{
             name=this.getText().toString();

@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.louisgeek.dropdownviewlib.javabean.ClassfiyBean;
 import com.louisgeek.dropdownviewlib.tools.SizeTool;
+import com.louisgeek.dropdownviewlib.tools.StringTool;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +22,8 @@ import java.util.List;
 public class ClassfiySeletView extends TextView implements View.OnClickListener{
     Context mContext;
     private static final String TAG = "ClassfiySeletView";
+    public static final String FIX_KEY_DEFAULT = "key_";
+    //private String fix_key=FIX_KEY_DEFAULT;
     List<ClassfiyBean> mClassfiyBeanList;
     int nowPPos=0;
     ClassfiySeletPopupWindow myPopupwindow;
@@ -62,7 +65,7 @@ public class ClassfiySeletView extends TextView implements View.OnClickListener{
         for (int i = 0; i <15 ; i++) {
             ClassfiyBean classfiyBean=new ClassfiyBean();
             classfiyBean.setID(i);
-            classfiyBean.setBeanID("key_"+i);
+            classfiyBean.setBeanID(FIX_KEY_DEFAULT+i);
             classfiyBean.setName("父分类"+i);
             classfiyBean.setSelected(false);
 
@@ -70,7 +73,7 @@ public class ClassfiySeletView extends TextView implements View.OnClickListener{
             for (int j = 0; j < (int)(Math.random()*10+3); j++) {//Math.random():获取0~1随机数
                 ClassfiyBean.ChildClassfiyBean ccc=new ClassfiyBean.ChildClassfiyBean();
                 ccc.setID(j);
-                ccc.setBeanID("key_"+j);
+                ccc.setBeanID(FIX_KEY_DEFAULT+j);
                 ccc.setName("父分类"+i+"下面的子项"+j);
                 ccc.setCount(""+(int)(Math.random()*20+1));//Math.random():获取0~1随机数
                 cccs.add(ccc);
@@ -81,7 +84,7 @@ public class ClassfiySeletView extends TextView implements View.OnClickListener{
         }
     }
     private void initView() {
-        if (this.getText()==null||this.getText().equals("")||this.getText().equals("null")) {
+        if (this.getText()==null|| StringTool.isNullOrNullStrOrBlankStr(this.getText().toString())) {
             this.setText(DEFAULT_NAME);
         }
         if (this.getPaddingTop()==0&&this.getPaddingBottom()==0&&this.getPaddingLeft()==0&&this.getPaddingRight()==0) {
@@ -123,7 +126,11 @@ public class ClassfiySeletView extends TextView implements View.OnClickListener{
             public void onItemSelected(String key, String name) {
                 ClassfiySeletView.this.setText(name);
                 ClassfiySeletView.this.setTag(key);
-                onContentViewChangeListener.onContentViewItemSeleted(key,name);
+                String keyWithOutFix=key;
+                if (key!=null&&!key.equals("")&&key.contains(FIX_KEY_DEFAULT)){
+                    keyWithOutFix=key.replace(FIX_KEY_DEFAULT,"");
+                }
+                onContentViewChangeListener.onContentViewItemSeleted(key,keyWithOutFix,name);
             }
         });
         myPopupwindow.showAsDropDown(v);
@@ -156,7 +163,7 @@ public class ClassfiySeletView extends TextView implements View.OnClickListener{
     public  interface  OnContentViewChangeListener{
         void onContentViewShow();
         void onContentViewDismiss();
-        void onContentViewItemSeleted(String key, String name);
+        void onContentViewItemSeleted(String key,String keyWithOutFix, String name);
     }
 
     public void setOnContentViewChangeListener(OnContentViewChangeListener onContentViewChangeListener) {
@@ -257,7 +264,7 @@ public class ClassfiySeletView extends TextView implements View.OnClickListener{
      *
      * @return
      */
-    public String  getClassfiyKey(){
+    public String  getSelectedClassfiyKey(){
         String key="";
         if (this.getTag()!=null)
         {
@@ -265,6 +272,19 @@ public class ClassfiySeletView extends TextView implements View.OnClickListener{
         }
         return  key;
     }
+    /**
+     *
+     * @return
+     */
+    public String  getSelectedClassfiyKeyWithoutFix(){
+        String key=getSelectedClassfiyKey();
+        String tempKey=key;
+        if (tempKey!=null&&!tempKey.equals("")&&tempKey.contains(FIX_KEY_DEFAULT)){
+            key=tempKey.replace(FIX_KEY_DEFAULT,"");
+        }
+        return  key;
+    }
+
 
 
 

@@ -62,7 +62,24 @@
         android:layout_below="@id/id_msv_gac"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>-->
+<NumberPicker
+    android:id="@+id/id_np"
+    android:visibility="gone"
+    android:layout_below="@id/id_msv_gac"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"/>
 
+    <com.louisgeek.dropdownviewlib.NumberPickerView
+        android:id="@+id/id_npv"
+        android:layout_below="@id/id_np"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
 
+    <Button
+        android:id="@+id/id_btn"
+        android:layout_below="@id/id_npv"
+        android:layout_width="wrap_content"
+        android:text="get value"
+        android:layout_height="wrap_content"/>
 
 </RelativeLayout>

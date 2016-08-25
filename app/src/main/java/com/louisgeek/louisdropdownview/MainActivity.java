@@ -2,9 +2,13 @@ package com.louisgeek.louisdropdownview;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.Button;
+import android.widget.Toast;
 
 import com.louisgeek.dropdownviewlib.ClassfiySeletView;
 import com.louisgeek.dropdownviewlib.MultiSelectView;
+import com.louisgeek.dropdownviewlib.NumberPickerView;
 import com.louisgeek.dropdownviewlib.javabean.MultiSelectHasChildBean;
 
 import java.util.ArrayList;
@@ -50,10 +54,26 @@ public class MainActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onContentViewItemSeleted(String key, String name) {
+            public void onContentViewItemSeleted(String key, String keyWithOutFix, String name) {
 
             }
+
         });
+
+
+
+       final NumberPickerView numberPickerView= (NumberPickerView) findViewById(R.id.id_npv);
+        //numberPickerView.setMinAndMaxAndIncrement(1,10,0.5);
+        // numberPickerView.setMinAndMaxAndIncrement(1,10,1);
+        //  numberPickerView.setNowValue("xx");
+        Button id_btn= (Button) findViewById(R.id.id_btn);
+        id_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(MainActivity.this, numberPickerView.getNowValue(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
     }
 
     private void initData() {
