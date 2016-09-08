@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.louisgeek.dropdownviewlib.tools.SizeTool;
+import com.louisgeek.dropdownviewlib.tools.StringTool;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -88,7 +89,7 @@ private  Context mContext;
 
     private void init(Context context) {
         mContext=context;
-        if (this.getText()==null||StringTool.isNullOrNullStrOrBlankStr(this.getText().toString()) ) {
+        if (this.getText()==null||StringTool.isNullOrNullStrOrBlankStr(this.getText().toString())) {
             this.setText("请选择");
         }
         defaultText=this.getText().toString();//
