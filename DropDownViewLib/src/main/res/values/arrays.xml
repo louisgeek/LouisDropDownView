@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="dropdown_array_default">
+        <item>选项1</item>
+        <item>选项2</item>
+        <item>选项3</item>
+    </string-array>
+    <string-array name="dropdown_array_default_with_key">
+        <item>op1_选项1</item>
+        <item>op2_选项2</item>
+        <item>op3_选项3</item>
+    </string-array>
+</resources>

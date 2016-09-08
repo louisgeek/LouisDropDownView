@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="list_blank_bg">#EEEEEE</color>
+    <color name="list_normal">#FFFFFF</color>
+    <color name="item_select">#EEEEEE</color>
+    <color name="item_normal">#FFFFFF</color>
+    <color name="item_text_select">#47b82d</color>
+    <color name="item_text_normal">#1a1818</color>
+</resources>

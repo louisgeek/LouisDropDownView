@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="DropDownView">
+        <attr name="itemArray" format="reference"/>
+    </declare-styleable>
+    <declare-styleable name="MultiSelectView">
+        <attr name="multItemArray" format="reference"/>
+        <attr name="showColumns" format="integer"/>
+    </declare-styleable>
+    <declare-styleable name="ProvinceCityAreaSelectView">
+        <attr name="allAreaKey" format="string"/>
+    </declare-styleable>
+</resources>

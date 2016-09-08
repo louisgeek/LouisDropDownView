@@ -1,0 +1,32 @@
+{
+    "cates": [
+      {
+        "cateid": "0_1",
+        "catename": "瓜菜类",
+        "children": [
+          {
+            "cateid": "1_2",
+            "catename": "甜瓜"
+          },
+          {
+            "cateid": "1_3",
+            "catename": "黄瓜"
+          },
+          {
+            "cateid": "1_4",
+            "catename": "西瓜"
+          }
+        ]
+      },
+      {
+        "cateid": "0_5",
+        "catename": "玉米类[先别选我]",
+        "children": [
+          {
+            "cateid": "5_6",
+            "catename": "菜用玉米"
+          }
+        ]
+      }
+    ]
+}

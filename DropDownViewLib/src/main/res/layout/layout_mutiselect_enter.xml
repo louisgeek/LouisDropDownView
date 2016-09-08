@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:orientation="horizontal"
+    android:id="@+id/id_ll_MultiSelectView"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:background="@drawable/shape_view"
+    android:layout_height="100dp"
+    >
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/id_rv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:scrollbars="vertical"
+        android:background="@android:color/transparent"
+        />
+    <TextView
+        android:background="@drawable/ic_keyboard_arrow_down_blue_grey_400_36dp"
+        android:layout_width="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_height="wrap_content"/>
+</LinearLayout>
