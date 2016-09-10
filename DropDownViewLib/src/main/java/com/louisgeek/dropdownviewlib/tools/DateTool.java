@@ -16,6 +16,7 @@ public class DateTool {
     public static final String FORMAT_DATE="yyyy-MM-dd";
     public static final String FORMAT_DATE_TIME="yyyy-MM-dd HH:mm:ss";
 
+    public static final String DEFAULT_DATA="1970-01-01";
     /**
      * 取当前China日期
      * @return
@@ -74,7 +75,7 @@ public class DateTool {
     }
 
 
-    public static Date parseStr2Data(String dateStr,String formatStr){
+    public static Date parseStr2Date(String dateStr,String formatStr){
         Date date=new Date();
         SimpleDateFormat sdf = new SimpleDateFormat(formatStr, Locale.CHINA);//Locale.SIMPLIFIED_CHINESE和Locale.CHINA一样
         try {
@@ -91,14 +92,15 @@ public class DateTool {
     }
 
 
+
     public static String parseCalendar2Str(Calendar calendar,String formatStr){
-       Date date=parseCalendar2Date(calendar);
+        Date date=parseCalendar2Date(calendar);
         return parseDate2Str(date,formatStr);
     }
 
 
     public static Calendar parseStr2Calendar(String dateStr,String formatStr){
-        Date date=parseStr2Data(dateStr,formatStr);
+        Date date=parseStr2Date(dateStr,formatStr);
         return  parseDate2Calendar(date);
     }
 
@@ -114,5 +116,42 @@ public class DateTool {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
         return  calendar;
+    }
+
+    /*    public boolean canParseToDate(String stringMayBeDate){
+            Date date;
+            try{
+               date=parseStr2Data(stringMayBeDate,FORMAT_DATE);
+            }catch (Exception e){
+                return false;
+            }
+
+           return date!=null;
+        }*/
+    public static boolean canParseToDate(String stringMayBeDateTime){
+        Date date;
+        SimpleDateFormat sdf = new SimpleDateFormat(FORMAT_DATE_TIME, Locale.CHINA);//Locale.SIMPLIFIED_CHINESE和Locale.CHINA一样
+        try {
+            date=sdf.parse(stringMayBeDateTime);
+        } catch (ParseException e) {
+            return false;
+        }
+        return date!=null;
+    }
+
+    public static String dealMaybeCanParseDateOrDefaultDateOrJustBackSource(String stringDateMayBe){
+        String temp;
+        if (DateTool.canParseToDate(stringDateMayBe)){
+            //格式化时间
+            temp=DateTool.parseDate2Str(DateTool.parseStr2Date(stringDateMayBe,DateTool.FORMAT_DATE),DateTool.FORMAT_DATE);
+            //默认时间
+            if(temp.equals(DEFAULT_DATA)){
+                temp="暂无";
+            }
+        }else {
+            temp=stringDateMayBe;
+        }
+        return  temp;
+
     }
 }

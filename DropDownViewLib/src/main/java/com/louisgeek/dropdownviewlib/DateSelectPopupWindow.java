@@ -86,7 +86,7 @@ public class DateSelectPopupWindow extends PopupWindow{
         Calendar calendar;
         if(mNowDateTextInner!=null&&!mNowDateTextInner.equals("")&&!mNowDateTextInner.equals("null")){
             //显示上一次选择数据
-           Date date=DateTool.parseStr2Data(mNowDateTextInner,DateTool.FORMAT_DATE);
+           Date date=DateTool.parseStr2Date(mNowDateTextInner,DateTool.FORMAT_DATE);
            calendar=DateTool.parseDate2Calendar(date);
         }else{
             calendar=Calendar.getInstance();//初始化时间
