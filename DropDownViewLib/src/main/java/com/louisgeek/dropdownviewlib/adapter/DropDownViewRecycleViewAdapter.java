@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.louisgeek.dropdownviewlib.DropDownView;
 import com.louisgeek.dropdownviewlib.R;
 
 import java.util.ArrayList;
@@ -78,23 +79,34 @@ public class DropDownViewRecycleViewAdapter extends RecyclerView.Adapter<Recycle
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         MyRecyclerViewHolder myRecyclerViewHolder = (MyRecyclerViewHolder) holder;
 
-        if (mDataList.get(position).get("isShowAbove")!=null){
-        String isShowAbove=mDataList.get(position).get("isShowAbove").toString();
-        Log.d(TAG, "onBindViewHolder updateBackground:isShowAbove"+isShowAbove);
-        if("true".equals(isShowAbove)) {
-            myRecyclerViewHolder.id_ll_item.setBackgroundResource(R.drawable.selector_shape_list_item_nobottom);
+
+        if (position==0){
+            ///
+            myRecyclerViewHolder.mTextView.setText(DropDownView.NUSELETED_SHOW_NAME);
         }else{
-            myRecyclerViewHolder.id_ll_item.setBackgroundResource(R.drawable.selector_shape_list_item_notop);
+            int  realPos=position-1;
+            ///
+            if (mDataList.get(realPos).get("isShowAbove")!=null){
+                String isShowAbove=mDataList.get(realPos).get("isShowAbove").toString();
+                Log.d(TAG, "onBindViewHolder updateBackground:isShowAbove"+isShowAbove);
+                if("true".equals(isShowAbove)) {
+                    myRecyclerViewHolder.id_ll_item.setBackgroundResource(R.drawable.selector_shape_list_item_nobottom);
+                }else{
+                    myRecyclerViewHolder.id_ll_item.setBackgroundResource(R.drawable.selector_shape_list_item_notop);
+                }
+            }
+            ///
+            if (mDataList.get(realPos).get("name")!=null){
+                myRecyclerViewHolder.mTextView.setText(mDataList.get(realPos).get("name").toString());
+            }
         }
-        }
-        if (mDataList.get(position).get("name")!=null){
-            myRecyclerViewHolder.mTextView.setText(mDataList.get(position).get("name").toString());
-        }
+
+
     }
 
     @Override
     public int getItemCount() {
-        return mDataList.size();
+        return mDataList.size()+1;
     }
 
     class MyRecyclerViewHolder extends RecyclerView.ViewHolder {
@@ -108,7 +120,7 @@ public class DropDownViewRecycleViewAdapter extends RecyclerView.Adapter<Recycle
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    mOnItemViewClickListener.onItemViewClick(v,getAdapterPosition());
+                    mOnItemViewClickListener.onItemViewClick(v,getAdapterPosition(),getAdapterPosition()-1);
                 }
             });
             mImageView= (ImageView) itemView.findViewById(R.id.id_iv);
@@ -135,7 +147,7 @@ public class DropDownViewRecycleViewAdapter extends RecyclerView.Adapter<Recycle
     }
 
     public  interface  OnItemViewClickListener{
-        void  onItemViewClick(View v, int Position);
+        void  onItemViewClick(View v, int position,int realPosition);
     }
 
     public void setOnItemViewClickListener(OnItemViewClickListener onItemViewClickListener) {

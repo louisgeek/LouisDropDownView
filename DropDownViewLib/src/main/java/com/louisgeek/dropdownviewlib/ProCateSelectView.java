@@ -67,24 +67,26 @@ public class ProCateSelectView extends LinearLayout{
         id_parent_pro.setupDataList(dataList);
         id_parent_pro.setOnItemClickListener(new DropDownView.OnItemClickListener() {
             @Override
-            public void onItemClick(Map<String, Object> map, int pos) {
+            public void onItemClick(Map<String, Object> map, int pos,int realPos) {
 
-                initInnerChild(pos);
+                initInnerChild(realPos);
             }
         });
 
-        initInnerChild(0);
+        ///###initInnerChild(0);
 
     }
 
     private void initInnerChild(int parent_pos) {
         id_child_pro.setText(id_child_pro.getDefaultText());
         List<Map<String, Object>> dataList_area = new ArrayList<>();
+        if (parent_pos>=0){
         for (int i = 0; i < proCate_CatesBeanList.get(parent_pos).getChildren().size(); i++) {
             Map<String, Object> map = new HashMap<>();
             map.put("name", proCate_CatesBeanList.get(parent_pos).getChildren().get(i).getCatename());
             map.put("key", proCate_CatesBeanList.get(parent_pos).getChildren().get(i).getCateid());
             dataList_area.add(map);
+        }
         }
         id_child_pro.setupDataList(dataList_area);
     }

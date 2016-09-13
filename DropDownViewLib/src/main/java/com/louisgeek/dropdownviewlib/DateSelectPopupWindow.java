@@ -84,7 +84,8 @@ public class DateSelectPopupWindow extends PopupWindow{
 
     private void initDatePicker() {
         Calendar calendar;
-        if(mNowDateTextInner!=null&&!mNowDateTextInner.equals("")&&!mNowDateTextInner.equals("null")){
+        if(mNowDateTextInner!=null&&!mNowDateTextInner.equals("")&&!mNowDateTextInner.equals("null")
+                &&!mNowDateTextInner.contains(DateSelectView.DEFAULT_DATA)&&!mNowDateTextInner.equals(DateSelectView.DEFAULT_STR)){
             //显示上一次选择数据
            Date date=DateTool.parseStr2Date(mNowDateTextInner,DateTool.FORMAT_DATE);
            calendar=DateTool.parseDate2Calendar(date);

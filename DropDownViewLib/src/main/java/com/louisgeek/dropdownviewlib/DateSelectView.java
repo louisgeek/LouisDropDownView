@@ -22,7 +22,7 @@ public class DateSelectView extends TextView implements View.OnClickListener {
     private  String endDateText;
     private  final  String DEFAULT_DATA_TIME="1970-01-01 00:00:00";
     public static final  String DEFAULT_DATA="1970-01-01";
-    private  final  String DEFAULT_STR="请选择";
+    public static final  String DEFAULT_STR="请选择";
     private static final String TAG = "DateSelectView";
     public DateSelectView(Context context) {
         super(context);
@@ -64,7 +64,7 @@ public class DateSelectView extends TextView implements View.OnClickListener {
             public void onDateSelect(int year, int monthOfYear, int dayOfMonth) {
                // SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
                 if (year==0&&monthOfYear==0&&dayOfMonth==0){
-                    if (mNowDateText.equals("")) {
+                    if (mNowDateText.trim().equals("")||mNowDateText.trim().equals(DEFAULT_STR)) {
                         mNowDateText = DateTool.getChinaDate();
                     }
                 }else{

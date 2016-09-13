@@ -130,7 +130,9 @@ public class ClassfiySeletView extends TextView implements View.OnClickListener{
                 if (key!=null&&!key.equals("")&&key.contains(FIX_KEY_DEFAULT)){
                     keyWithOutFix=key.replace(FIX_KEY_DEFAULT,"");
                 }
-                onContentViewChangeListener.onContentViewItemSeleted(key,keyWithOutFix,name);
+                if (onContentViewChangeListener!=null) {
+                    onContentViewChangeListener.onContentViewItemSeleted(key, keyWithOutFix, name);
+                }
             }
         });
         myPopupwindow.showAsDropDown(v);

@@ -30,34 +30,36 @@ public class DropDownPopupWindow extends PopupWindow implements DropDownViewRecy
     private static final String TAG = "DropDownPopupWindow";
     View view;
     DropDownViewRecycleViewAdapter myRecycleViewAdapter;
-    public DropDownPopupWindow(Context context, List<Map<String, Object>> dataList,int gridColumns) {
+
+    public DropDownPopupWindow(Context context, List<Map<String, Object>> dataList, int gridColumns) {
         super(context);
         mDataList = dataList;
         mContext = context;
-        this.gridColumns=gridColumns;
+        this.gridColumns = gridColumns;
 
     }
+
     public DropDownPopupWindow(Context context, List<Map<String, Object>> dataList) {
-        this(context,dataList,0);
+        this(context, dataList, 0);
     }
 
     private void initView() {
-        LayoutInflater  inflater = (LayoutInflater) mContext
+        LayoutInflater inflater = (LayoutInflater) mContext
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        view= inflater.inflate(R.layout.layout_popupwindow_dropdown, null);
+        view = inflater.inflate(R.layout.layout_popupwindow_dropdown, null);
         // id_pop_tv= (TextView) view.findViewById(R.id.id_pop_tv);
 
         mRecyclerView = (RecyclerView) view.findViewById(R.id.id_rv);
-        myRecycleViewAdapter=new DropDownViewRecycleViewAdapter(mContext,mDataList,itemWidth);
-        if (gridColumns==0) {
+        myRecycleViewAdapter = new DropDownViewRecycleViewAdapter(mContext, mDataList, itemWidth);
+        if (gridColumns == 0) {
             mRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
-        }else{
-            mRecyclerView.setLayoutManager(new GridLayoutManager(mContext,gridColumns));
+        } else {
+            mRecyclerView.setLayoutManager(new GridLayoutManager(mContext, gridColumns));
         }
 
         myRecycleViewAdapter.setOnItemViewClickListener(this);
         //设置Item增加、移除动画
-       // mRecyclerView.setItemAnimator(new DefaultItemAnimator());
+        // mRecyclerView.setItemAnimator(new DefaultItemAnimator());
         mRecyclerView.setAdapter(myRecycleViewAdapter);
 
         //设置PopupWindow的View
@@ -72,18 +74,22 @@ public class DropDownPopupWindow extends PopupWindow implements DropDownViewRecy
     }
 
     @Override
-    public void onItemViewClick(View v, int Position) {
-           this.dismiss();
+    public void onItemViewClick(View v, int position, int realPosition) {
+        this.dismiss();
+        if (position == 0) {
+            onItemSelectListener.onItemSelect(null, position,realPosition);
+        } else {
+            Map<String, Object> nowMap = mDataList.get(realPosition);
 
-            Map<String,Object> nowMap =mDataList.get(Position);
+            onItemSelectListener.onItemSelect(nowMap, position,realPosition);
+        }
 
-           onItemSelectListener.onItemSelect(nowMap,Position);
 
     }
 
 
     public interface OnItemSelectListener {
-        void onItemSelect(Map<String,Object> map,int pos);
+        void onItemSelect(Map<String, Object> map, int pos,int realPos);
     }
 
     public void setOnItemSelectListener(OnItemSelectListener onItemSelectListener) {
@@ -93,46 +99,45 @@ public class DropDownPopupWindow extends PopupWindow implements DropDownViewRecy
     OnItemSelectListener onItemSelectListener;
 
     public void showAsDropDownBelwBtnView(View btnView) {
-        int anchor_w= btnView.getWidth();
-        this.itemWidth=anchor_w;
+        int anchor_w = btnView.getWidth();
+        this.itemWidth = anchor_w;
         initView();
 
-        int allHeight1=this.getMaxAvailableHeight(view);
-        int allHeight2=this.getMaxAvailableHeight(btnView);
-        Log.d(TAG, "showAsDropDownBelwBtnView: allHeight1:"+allHeight1);//1920    应该是屏幕高度
-        Log.d(TAG, "showAsDropDownBelwBtnView: allHeight2:"+allHeight2);// 由上到下  先减小后增加   应该是popwindow动态判断是否显示在上面，然后可以的高度就会如此变化
+        int allHeight1 = this.getMaxAvailableHeight(view);
+        int allHeight2 = this.getMaxAvailableHeight(btnView);
+        Log.d(TAG, "showAsDropDownBelwBtnView: allHeight1:" + allHeight1);//1920    应该是屏幕高度
+        Log.d(TAG, "showAsDropDownBelwBtnView: allHeight2:" + allHeight2);// 由上到下  先减小后增加   应该是popwindow动态判断是否显示在上面，然后可以的高度就会如此变化
 
-        int btnViewHeight=btnView.getHeight();
-        Log.d(TAG, "showAsDropDownBelwBtnView: btnViewHeight:"+btnViewHeight);
-        int mRecyclerViewHeight=getTargetHeight(mRecyclerView);
-        Log.d(TAG, "showAsDropDownBelwBtnView: mRecyclerView:"+mRecyclerViewHeight);
+        int btnViewHeight = btnView.getHeight();
+        Log.d(TAG, "showAsDropDownBelwBtnView: btnViewHeight:" + btnViewHeight);
+        int mRecyclerViewHeight = getTargetHeight(mRecyclerView);
+        Log.d(TAG, "showAsDropDownBelwBtnView: mRecyclerView:" + mRecyclerViewHeight);
 
         int[] position = new int[2];
         btnView.getLocationInWindow(position);
-        int x=position[0];
-        int y=position[1];
-        Log.d(TAG, "showAsDropDownBelwBtnView: BtnView x:"+x);
-        Log.d(TAG, "showAsDropDownBelwBtnView: BtnView y:"+y);
+        int x = position[0];
+        int y = position[1];
+        Log.d(TAG, "showAsDropDownBelwBtnView: BtnView x:" + x);
+        Log.d(TAG, "showAsDropDownBelwBtnView: BtnView y:" + y);
 
 
-
-        if ((allHeight1-y-btnViewHeight)<mRecyclerViewHeight&&y>mRecyclerViewHeight){
+        if ((allHeight1 - y - btnViewHeight) < mRecyclerViewHeight && y > mRecyclerViewHeight) {
 
             this.showAsDropDown(btnView, 0, -(mRecyclerViewHeight + btnViewHeight));
-            myRecycleViewAdapter.updateBackground(true,mRecyclerView);
-        }else{
+            myRecycleViewAdapter.updateBackground(true, mRecyclerView);
+        } else {
 
             this.showAsDropDown(btnView);
-            myRecycleViewAdapter.updateBackground(false,mRecyclerView);
+            myRecycleViewAdapter.updateBackground(false, mRecyclerView);
 
         }
-
 
 
     }
 
     /**
      * 利用反射来获取View未显示前的高度
+     *
      * @param v
      * @return
      */

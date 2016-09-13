@@ -91,7 +91,9 @@ public class MyRecylerViewRightAdapter extends RecyclerView.Adapter<RecyclerView
                 @Override
                 public void onClick(View v) {
                     setNormalSelectedState(realPos);
+                    if (onItemClickListener!=null){
                     onItemClickListener.onItemClickNormal(v,mClassfiyBeanList,parentPos,realPos);
+                    }
                 }
             });
             myRecyclerViewViewNormalHolder.itemView.setSelected(getNormalSeletedState(realPos));

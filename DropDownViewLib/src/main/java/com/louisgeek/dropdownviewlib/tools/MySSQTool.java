@@ -3,6 +3,7 @@ package com.louisgeek.dropdownviewlib.tools;
 import android.content.Context;
 import android.util.Log;
 
+import com.louisgeek.dropdownviewlib.R;
 import com.louisgeek.dropdownviewlib.javabean.Area;
 import com.louisgeek.dropdownviewlib.javabean.City;
 import com.louisgeek.dropdownviewlib.javabean.Province;
@@ -94,5 +95,65 @@ public class MySSQTool {
             e.printStackTrace();
         }
         return result;
+    }
+
+
+
+    public static String getProvinceCityAreaNameStrByOnlyAreaID(Context context,String areaKey){
+        if (areaKey==null||areaKey.trim().equals("")||areaKey.trim().toLowerCase().equals("null")){
+            return "";
+        }
+        String ssqJson = getStringFromRaw(context, R.raw.ssq);
+        List<Province> provinceList = parseJson(ssqJson);
+        //
+        String province = "";
+        String city = "";
+        String area = "";
+        //
+        String provinceID = areaKey.substring(0, 2) + "0000";//从0开始数，其中不包括endIndex位置的字符
+        String cityID = areaKey.substring(0, 4) + "00";
+        String areaID = areaKey;
+
+        int nowProvinceIndex=0;
+        for (int i = 0; i <provinceList.size() ; i++) {
+            if (provinceID.equals(provinceList.get(i).getProvinceID())){
+                province=provinceList.get(i).getProvinceName();
+                nowProvinceIndex=i;
+                break;
+            }
+        }
+        int nowCityIndex=0;
+        for (int i = 0; i <provinceList.get(nowProvinceIndex).getCites().size() ; i++) {
+            if (cityID.equals(provinceList.get(nowProvinceIndex).getCites().get(i).getCityID())){
+                city=provinceList.get(nowProvinceIndex).getCites().get(i).getCityName();
+                nowCityIndex=i;
+                break;
+            }
+        }
+        for (int i = 0; i <provinceList.get(nowProvinceIndex).getCites().get(nowCityIndex).getAreas().size() ; i++) {
+            if (areaID.equals(provinceList.get(nowProvinceIndex).getCites().get(nowCityIndex).getAreas().get(i).getAreaID())){
+                area=provinceList.get(nowProvinceIndex).getCites().get(nowCityIndex).getAreas().get(i).getAreaName();
+                break;
+            }
+        }
+
+        StringBuilder stringBuilder = new StringBuilder();
+        if (province != null && !province.equals("")) {
+            stringBuilder.append(province);
+            stringBuilder.append("-");
+        }
+        if (city != null && !city.equals("")) {
+            stringBuilder.append(city);
+            stringBuilder.append("-");
+        }
+        if (area != null && !area.equals("")) {
+            stringBuilder.append(area);
+        }
+        String temp=stringBuilder.toString();
+        return temp.equals("--")?"":temp;
+    }
+
+    public static String getProvinceCityAreaNameStrByOnlyAreaIDWithOutFix(Context context,String areaKey){
+        return  getProvinceCityAreaNameStrByOnlyAreaID(context,areaKey).replace("-","");
     }
 }

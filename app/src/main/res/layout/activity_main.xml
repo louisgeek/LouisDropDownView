@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingBottom="@dimen/activity_vertical_margin"
@@ -23,35 +24,37 @@
     <com.louisgeek.dropdownviewlib.DateSelectView
         android:layout_marginTop="10dp"
         android:id="@+id/id_dsv"
-        android:layout_below="@+id/id_ddv"
         android:padding="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 
     <com.louisgeek.dropdownviewlib.ProvinceCityAreaSelectView
         android:layout_marginTop="10dp"
+        android:id="@+id/id_pcasv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <com.louisgeek.dropdownviewlib.ProCateSelectView
+        android:layout_marginTop="10dp"
         android:id="@+id/id_pcsv"
         android:layout_width="wrap_content"
-        android:layout_below="@id/id_dsv"
         android:layout_height="wrap_content"/>
+
     <com.louisgeek.dropdownviewlib.ClassfiySeletView
         android:layout_marginTop="10dp"
         android:id="@+id/id_csv"
-        android:layout_below="@id/id_pcsv"
         android:padding="13dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 
     <com.louisgeek.dropdownviewlib.MultiSelectView
         android:layout_marginTop="10dp"
-        android:layout_below="@id/id_csv"
         android:layout_width="wrap_content"
         android:id="@+id/id_msv"
         android:text="多选"
         android:layout_height="wrap_content"/>
     <com.louisgeek.dropdownviewlib.MultiSelectView_HasChild
         android:layout_marginTop="10dp"
-        android:layout_below="@id/id_msv"
         android:layout_width="wrap_content"
         android:id="@+id/id_msv_gac"
         android:text="多选"
@@ -62,20 +65,11 @@
         android:layout_below="@id/id_msv_gac"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>-->
-<NumberPicker
-    android:id="@+id/id_np"
-    android:visibility="gone"
-    android:layout_below="@id/id_msv_gac"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"/>
-
 
     <Button
         android:id="@+id/id_btn"
-        android:layout_below="@id/id_np"
-        android:visibility="gone"
         android:layout_width="wrap_content"
         android:text="get value"
         android:layout_height="wrap_content"/>
 
-</RelativeLayout>
+</LinearLayout>

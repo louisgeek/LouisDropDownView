@@ -105,47 +105,59 @@ public class ProvinceCityAreaSelectView extends LinearLayout {
         id_ddv_province.setupDataList(dataList);
         id_ddv_province.setOnItemClickListener(new DropDownView.OnItemClickListener() {
             @Override
-            public void onItemClick(Map<String, Object> map, int pos) {
+            public void onItemClick(Map<String, Object> map, int pos, int realPos) {
 
-                initInnerCity(pos);
+                initInnerCity(realPos);
             }
         });
 
-        initInnerCity(0);
+        ///### initInnerCity(0);
 
     }
 
     private void initInnerCity(final int province_pos) {
         id_ddv_city.setText(id_ddv_city.getDefaultText());
+        Log.i(TAG, "initInnerCity: province_pos:" + province_pos);
         List<Map<String, Object>> dataList_city = new ArrayList<>();
-        for (int i = 0; i < provinceList.get(province_pos).getCites().size(); i++) {
-            Map<String, Object> map = new HashMap<>();
-            map.put("name", provinceList.get(province_pos).getCites().get(i).getCityName());
-            map.put("key", provinceList.get(province_pos).getCites().get(i).getCityID());
-            dataList_city.add(map);
+        if (province_pos >= 0) {
+            for (int i = 0; i < provinceList.get(province_pos).getCites().size(); i++) {
+                Map<String, Object> map = new HashMap<>();
+                map.put("name", provinceList.get(province_pos).getCites().get(i).getCityName());
+                map.put("key", provinceList.get(province_pos).getCites().get(i).getCityID());
+                dataList_city.add(map);
+            }
+        } else {
+            //省未选择时  清空区  附加  2016年9月10日16:07:10
+            initInnerArea(province_pos, 0);
         }
         id_ddv_city.setupDataList(dataList_city);
         id_ddv_city.setOnItemClickListener(new DropDownView.OnItemClickListener() {
             @Override
-            public void onItemClick(Map<String, Object> map, int pos) {
+            public void onItemClick(Map<String, Object> map, int pos, int realPos) {
 
-                initInnerArea(province_pos, pos);
+                initInnerArea(province_pos, realPos);
 
             }
         });
-        initInnerArea(province_pos, 0);
+
+        //### initInnerArea(province_pos, 0);
     }
 
     private void initInnerArea(int province_pos, int city_pos) {
         id_ddv_area.setText(id_ddv_area.getDefaultText());
+        Log.i(TAG, "initInnerCity: province_pos:" + province_pos);
+        Log.i(TAG, "initInnerArea: city_pos:" + city_pos);
         List<Map<String, Object>> dataList_area = new ArrayList<>();
-        for (int i = 0; i < provinceList.get(province_pos).getCites().get(city_pos).getAreas().size(); i++) {
-            Map<String, Object> map = new HashMap<>();
-            map.put("name", provinceList.get(province_pos).getCites().get(city_pos).getAreas().get(i).getAreaName());
-            map.put("key", provinceList.get(province_pos).getCites().get(city_pos).getAreas().get(i).getAreaID());
-            dataList_area.add(map);
+        if (province_pos >= 0 && city_pos >= 0) {
+            for (int i = 0; i < provinceList.get(province_pos).getCites().get(city_pos).getAreas().size(); i++) {
+                Map<String, Object> map = new HashMap<>();
+                map.put("name", provinceList.get(province_pos).getCites().get(city_pos).getAreas().get(i).getAreaName());
+                map.put("key", provinceList.get(province_pos).getCites().get(city_pos).getAreas().get(i).getAreaID());
+                dataList_area.add(map);
+            }
         }
         id_ddv_area.setupDataList(dataList_area);
+
     }
 
 
@@ -260,35 +272,38 @@ public class ProvinceCityAreaSelectView extends LinearLayout {
         id_ddv_area.setVisibility(GONE);
     }
 
-    public String getProvinceCityAreaStr() {
+    public String getProvinceCityAreaNameStr(){
         String province = id_ddv_province.getSelectName();
         String city = id_ddv_city.getSelectName();
         String area = id_ddv_area.getSelectName();
         StringBuilder stringBuilder = new StringBuilder();
-        if (province != null && province.equals("")) {
+        if (province != null && !province.equals("")) {
             stringBuilder.append(province);
             stringBuilder.append("-");
         }
-        if (city != null && city.equals("")) {
+        if (city != null && !city.equals("")) {
             stringBuilder.append(city);
             stringBuilder.append("-");
         }
-        if (area != null && area.equals("")) {
+        if (area != null && !area.equals("")) {
             stringBuilder.append(area);
         }
-
-        return stringBuilder.toString();
+        String temp=stringBuilder.toString();
+        return temp.equals("--")?"":temp;
+    }
+    public String getProvinceCityAreaNameStrWithOutFix(){
+        return  getProvinceCityAreaNameStr().replace("-","");
     }
 
     public String getProvinceCityAreaKey() {
         String province_id = id_ddv_province.getSelectKey();
         String city_id = id_ddv_city.getSelectKey();
         String area_id = id_ddv_area.getSelectKey();
-        if (area_id != null && !area_id.equals("")&&!area_id.equals("-1")) {
+        if (area_id != null && !area_id.equals("") && !area_id.equals("-1")) {
             return area_id;
-        } else if (city_id != null && !city_id.equals("")&&!city_id.equals("-1")) {
+        } else if (city_id != null && !city_id.equals("") && !city_id.equals("-1")) {
             return city_id;
-        } else if (province_id != null && !province_id.equals("")&&!province_id.equals("-1")) {
+        } else if (province_id != null && !province_id.equals("") && !province_id.equals("-1")) {
             return province_id;
         } else {
             return ALL_AREA_KEY_DEFAULT;

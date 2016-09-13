@@ -129,11 +129,14 @@ public class DateTool {
            return date!=null;
         }*/
     public static boolean canParseToDate(String stringMayBeDateTime){
+        if (stringMayBeDateTime==null){
+            return false;
+        }
         Date date;
         SimpleDateFormat sdf = new SimpleDateFormat(FORMAT_DATE_TIME, Locale.CHINA);//Locale.SIMPLIFIED_CHINESE和Locale.CHINA一样
         try {
             date=sdf.parse(stringMayBeDateTime);
-        } catch (ParseException e) {
+        } catch (Exception e) {
             return false;
         }
         return date!=null;

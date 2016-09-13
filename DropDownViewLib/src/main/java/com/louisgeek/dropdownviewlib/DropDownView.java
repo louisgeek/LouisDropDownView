@@ -24,11 +24,11 @@ public class DropDownView extends TextView implements View.OnClickListener {
 
 private  Context mContext;
     private static final String TAG = "DropDownView";
+    public static final String NUSELETED_SHOW_NAME = "请选择";
     String[] items_all;
     List<String>  items_key_list;
     List<String>  items_name_list;
     View nowClickView;
-
     public String getDefaultText() {
         return defaultText;
     }
@@ -90,7 +90,7 @@ private  Context mContext;
     private void init(Context context) {
         mContext=context;
         if (this.getText()==null||StringTool.isNullOrNullStrOrBlankStr(this.getText().toString())) {
-            this.setText("请选择");
+            this.setText(NUSELETED_SHOW_NAME);
         }
         defaultText=this.getText().toString();//
        // this.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
@@ -153,7 +153,11 @@ private  Context mContext;
             myPopupwindow.showAsDropDownBelwBtnView(nowClickView);
             myPopupwindow.setOnItemSelectListener(new DropDownPopupWindow.OnItemSelectListener() {
                 @Override
-                public void onItemSelect(Map<String,Object> map,int pos) {
+                public void onItemSelect(Map<String,Object> map,int pos,int realPos) {
+                    if (map==null){
+                        ((DropDownView) nowClickView).setText(NUSELETED_SHOW_NAME);
+                    }else{
+                        ////
                     if (map.get("name")!=null) {
                         ((DropDownView) nowClickView).setText(map.get("name").toString());
                     }
@@ -163,8 +167,11 @@ private  Context mContext;
                         nowClickView.setTag(R.id.hold_dropdown_key, map.get("key").toString());
                     }
                     //Log.d(TAG, "onItemSelect: ssqid:"+map.get("ssqid").toString());
+
+                    }
+
                     if (onItemClickListener!=null) {
-                        onItemClickListener.onItemClick(map,pos);
+                        onItemClickListener.onItemClick(map,pos,realPos);
                     }
                 }
             });
@@ -188,7 +195,7 @@ private  Context mContext;
 
 
     public  interface OnItemClickListener{
-        void  onItemClick(Map<String,Object> map,int pos);
+        void  onItemClick(Map<String,Object> map,int pos,int realPos);
     }
 
     public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
@@ -203,7 +210,7 @@ private  Context mContext;
      */
     public void setSelectNameByKey(String key) {
         if (key==null||key.equals("")||key.equals("null")||key.trim().equals("")) {
-            this.setText("请选择");
+            this.setText(NUSELETED_SHOW_NAME);
         }else{
             this.setText(this.getNameByKey(key));
         }
@@ -214,7 +221,7 @@ private  Context mContext;
      */
     public void setSelectName(String text) {
         if (text==null||text.equals("")||text.equals("null")||text.trim().equals("")) {
-            this.setText("请选择");
+            this.setText(NUSELETED_SHOW_NAME);
         }else{
             this.setText(text);
         }
@@ -237,7 +244,8 @@ private  Context mContext;
      */
     public String  getSelectName() {
         String name="";
-        if (this.getText()==null||StringTool.isNullOrNullStrOrBlankStr(this.getText().toString()) ||this.getText().toString().equals("请选择")) {
+        if (this.getText()==null||StringTool.isNullOrNullStrOrBlankStr(this.getText().toString())
+                ||this.getText().toString().trim().equals(defaultText)) {
             name="";
         }else{
             name=this.getText().toString();
@@ -307,13 +315,17 @@ private  Context mContext;
      * 通过name得到所选的key
      */
     public String getNameByPosition(int position){
-        return String.valueOf(dataList.get(position).get("name"));
+        String name= String.valueOf(dataList.get(position).get("name"));
+        if (name.trim().equals(defaultText)){
+            name="";
+        }
+        return name;
     }
     /**
      * 通过position设置name
      */
     public void setNameByPosition(int position){
-        String name="";
+        String name=defaultText;
         if (dataList!=null&&dataList.size()>0&&position<dataList.size()){
             name=String.valueOf(dataList.get(position).get("name"));
         }

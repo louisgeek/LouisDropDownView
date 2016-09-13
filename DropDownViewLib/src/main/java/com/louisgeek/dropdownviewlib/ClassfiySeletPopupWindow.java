@@ -164,7 +164,9 @@ public class ClassfiySeletPopupWindow extends PopupWindow{
                     //Toast.makeText(mContext, "xxx parentPos:"+parentPos+",child name:"+childClassfiyBeanList.get(childPos).getName(), Toast.LENGTH_SHORT).show();
                     Log.d(TAG, "QQQ onItemClickNormal: parentPos:" + parentPos + ",childPos:" + childPos);
                     String key = classfiyBeanList.get(parentPos).getBeanID() + CUT_TAG + childClassfiyBeanList.get(childPos).getBeanID();
+                   if (onItemSelectedListener!=null){
                     onItemSelectedListener.onItemSelected(key, childClassfiyBeanList.get(childPos).getName());
+                   }
                     ClassfiySeletPopupWindow.this.dismiss();
 
                     Log.d(TAG, "fff onItemClickNormal: key:" + key);
