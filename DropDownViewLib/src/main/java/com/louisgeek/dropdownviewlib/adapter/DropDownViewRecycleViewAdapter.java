@@ -64,6 +64,14 @@ public class DropDownViewRecycleViewAdapter extends RecyclerView.Adapter<Recycle
     private List<Map<String, Object>> mDataList;
     private Context mContext;
 
+
+    /**
+     *
+     *
+     * @param parent
+     * @param viewType
+     * @return
+     */
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(mContext).inflate(R.layout.dropdown_item, parent,false);//不false  在popupwindow里报错

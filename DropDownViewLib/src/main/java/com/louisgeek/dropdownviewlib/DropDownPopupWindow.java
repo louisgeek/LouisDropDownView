@@ -27,6 +27,7 @@ public class DropDownPopupWindow extends PopupWindow implements DropDownViewRecy
     RecyclerView mRecyclerView;
     int gridColumns;
     int itemWidth;
+    DropDownView dropDownView;
     private static final String TAG = "DropDownPopupWindow";
     View view;
     DropDownViewRecycleViewAdapter myRecycleViewAdapter;
@@ -36,7 +37,6 @@ public class DropDownPopupWindow extends PopupWindow implements DropDownViewRecy
         mDataList = dataList;
         mContext = context;
         this.gridColumns = gridColumns;
-
     }
 
     public DropDownPopupWindow(Context context, List<Map<String, Object>> dataList) {
@@ -50,6 +50,8 @@ public class DropDownPopupWindow extends PopupWindow implements DropDownViewRecy
         // id_pop_tv= (TextView) view.findViewById(R.id.id_pop_tv);
 
         mRecyclerView = (RecyclerView) view.findViewById(R.id.id_rv);
+
+
         myRecycleViewAdapter = new DropDownViewRecycleViewAdapter(mContext, mDataList, itemWidth);
         if (gridColumns == 0) {
             mRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
@@ -72,6 +74,8 @@ public class DropDownPopupWindow extends PopupWindow implements DropDownViewRecy
         this.setFocusable(true);//设置后  达到返回按钮先消失popupWindow
         //id_pop_tv.setOnClickListener(this);
     }
+
+
 
     @Override
     public void onItemViewClick(View v, int position, int realPosition) {
@@ -101,6 +105,7 @@ public class DropDownPopupWindow extends PopupWindow implements DropDownViewRecy
     public void showAsDropDownBelwBtnView(View btnView) {
         int anchor_w = btnView.getWidth();
         this.itemWidth = anchor_w;
+        this.dropDownView = (DropDownView) btnView;
         initView();
 
         int allHeight1 = this.getMaxAvailableHeight(view);

@@ -34,13 +34,19 @@ private  Context mContext;
     }
 
     String defaultText;
+    int defaultBthWidth=0;
+
+    boolean canSelect;
     public void setupDataList(List<Map<String, Object>> dataList) {
         //if (dataList!=null&&dataList.size()>0) {
             this.dataList.clear();
             this.dataList.addAll(dataList);
             Log.d(TAG, "setNameStateList: " + this.dataList.size());
        // }
+      configMaxItemWidth();
     }
+
+
 
     List<Map<String, Object>> dataList=new ArrayList<>();
 
@@ -54,6 +60,7 @@ private  Context mContext;
         super(context, attrs);
         TypedArray typedArray = context.obtainStyledAttributes(attrs,
                 R.styleable.DropDownView);
+        canSelect = typedArray.getBoolean(R.styleable.DropDownView_canSelect,true);
         int itemArray_resID = typedArray.getResourceId(R.styleable.DropDownView_itemArray,0);
         if (itemArray_resID!=0) {
             items_all = getResources().getStringArray(itemArray_resID);//R.array.select_dialog_items
@@ -100,7 +107,8 @@ private  Context mContext;
             this.setPadding(paddingLeft_Right, paddingTop_Bottom, paddingLeft_Right, paddingTop_Bottom);
         }
         this.setOnClickListener(this);
-        this.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.ic_keyboard_arrow_down_blue_grey_400_18dp,0);
+        if (canSelect){
+        this.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.ic_keyboard_arrow_down_blue_grey_400_18dp,0);}
         this.setBackgroundResource(R.drawable.shape_list);
         this.setSingleLine();
         /**
@@ -133,7 +141,52 @@ private  Context mContext;
 
 
         dealParseList();//转换list
+
+        defaultBthWidth=SizeTool.getMeasuredWidthMy(this);
+        configMaxItemWidth();
     }
+
+
+    /**
+     * 2016年9月20日09:48:07
+     */
+    private void configMaxItemWidth() {
+        //初始化w
+        int newItemWidth=dealItemMaxWidth(dataList,defaultBthWidth,this.getTextSize());
+        this.setWidth(newItemWidth);
+        Log.i(TAG, "configMaxItemWidth:newItemWidth:"+newItemWidth);
+    }
+
+    /**
+     * 2016年9月20日09:48:07
+     * @param dataList
+     * @param btnWidth
+     * @param textSize
+     * @return
+     */
+    private int dealItemMaxWidth(List<Map<String, Object>> dataList,int btnWidth,float textSize) {
+        int tempWidth=0;
+        int maxLen=0;
+        String maxName="";
+        for (int i = 0; i < dataList.size(); i++) {
+            String nowName=dataList.get(i).get("name").toString();
+            if (nowName.length()>maxLen){
+                maxLen=nowName.length();
+                maxName=nowName;
+            }
+        }
+        if (maxLen>DropDownView.NUSELETED_SHOW_NAME.length()){
+            int defaultTextWidth= StringTool.getAllTextWidth(DropDownView.NUSELETED_SHOW_NAME,textSize);
+            int maxNameTextWidth= StringTool.getAllTextWidth(maxName,textSize);
+
+            tempWidth=btnWidth-defaultTextWidth+maxNameTextWidth;
+        }else {
+            tempWidth=btnWidth;
+        }
+
+        return tempWidth;
+    }
+
 
     public int  dealTextMyW(int text_width,int text_ScaleX,int text_count){
        return text_width*text_count+text_ScaleX*(text_count-1);
@@ -142,11 +195,15 @@ private  Context mContext;
 
     @Override
     public void onClick(View v) {
+        if (!canSelect){
+            return;
+        }
         nowClickView=v;
 
         if (dataList==null||dataList.size()>0){
             dealParseList();//转换list
         }
+
 
         if (dataList!=null&&dataList.size()>0){
             DropDownPopupWindow myPopupwindow=new DropDownPopupWindow(mContext,dataList);
@@ -331,4 +388,5 @@ private  Context mContext;
         }
         this.setSelectName(name);
     }
+
 }

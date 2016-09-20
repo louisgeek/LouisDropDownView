@@ -118,17 +118,20 @@ public class DateTool {
         return  calendar;
     }
 
-    /*    public boolean canParseToDate(String stringMayBeDate){
-            Date date;
-            try{
-               date=parseStr2Data(stringMayBeDate,FORMAT_DATE);
-            }catch (Exception e){
+      public static boolean canParseToDate(String stringMayBeDate){
+            if (stringMayBeDate==null){
                 return false;
             }
-
-           return date!=null;
-        }*/
-    public static boolean canParseToDate(String stringMayBeDateTime){
+            Date date;
+            SimpleDateFormat sdf = new SimpleDateFormat(FORMAT_DATE, Locale.CHINA);//Locale.SIMPLIFIED_CHINESE和Locale.CHINA一样
+            try {
+                date=sdf.parse(stringMayBeDate);
+            } catch (Exception e) {
+                return false;
+            }
+            return date!=null;
+        }
+    public static boolean canParseToDateTime(String stringMayBeDateTime){
         if (stringMayBeDateTime==null){
             return false;
         }
@@ -144,7 +147,7 @@ public class DateTool {
 
     public static String dealMaybeCanParseDateOrDefaultDateOrJustBackSource(String stringDateMayBe){
         String temp;
-        if (DateTool.canParseToDate(stringDateMayBe)){
+        if (DateTool.canParseToDateTime(stringDateMayBe)||DateTool.canParseToDate(stringDateMayBe)){
             //格式化时间
             temp=DateTool.parseDate2Str(DateTool.parseStr2Date(stringDateMayBe,DateTool.FORMAT_DATE),DateTool.FORMAT_DATE);
             //默认时间

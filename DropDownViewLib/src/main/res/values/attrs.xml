@@ -2,6 +2,7 @@
 <resources>
     <declare-styleable name="DropDownView">
         <attr name="itemArray" format="reference"/>
+        <attr name="canSelect" format="boolean"/>
     </declare-styleable>
     <declare-styleable name="MultiSelectView">
         <attr name="multItemArray" format="reference"/>
