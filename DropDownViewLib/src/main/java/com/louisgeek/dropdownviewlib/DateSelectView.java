@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.louisgeek.dropdownviewlib.tools.DateTool;
+import com.louisgeek.dropdownviewlib.tools.KeyBoardTool;
 import com.louisgeek.dropdownviewlib.tools.SizeTool;
 
 import java.util.Date;
@@ -57,6 +58,9 @@ public class DateSelectView extends TextView implements View.OnClickListener {
 
     @Override
     public void onClick(final View v) {
+        //
+        KeyBoardTool.hideKeyboard(v);
+
         DateSelectPopupWindow myPopupwindow=new DateSelectPopupWindow(mContext,mNowDateText,startDateText,endDateText);
         myPopupwindow.showAtLocation(v, Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL,0,0);
         myPopupwindow.setOnDateSelectListener(new DateSelectPopupWindow.OnDateSelectListener() {

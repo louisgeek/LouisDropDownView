@@ -3,9 +3,11 @@ package com.louisgeek.dropdownviewlib.tools;
 import android.content.Context;
 import android.util.Log;
 
+import com.alibaba.fastjson.JSON;
 import com.louisgeek.dropdownviewlib.R;
 import com.louisgeek.dropdownviewlib.javabean.Area;
 import com.louisgeek.dropdownviewlib.javabean.City;
+import com.louisgeek.dropdownviewlib.javabean.ProCate;
 import com.louisgeek.dropdownviewlib.javabean.Province;
 
 import org.json.JSONArray;
@@ -82,28 +84,79 @@ public class MySSQTool {
      * @return
      */
     public static String getStringFromRaw(Context context,int rawID) {
+        StringBuilder sb_result = new StringBuilder("");
+        try {
+            InputStream ssq_is = context.getResources().openRawResource(rawID);
+
+            InputStreamReader inputReader = new InputStreamReader(ssq_is);
+            //InputStreamReader inputReader = new InputStreamReader(ssq_is,"UTF-8");
+            BufferedReader bufReader = new BufferedReader(inputReader);
+            String line = "";
+            while ((line = bufReader.readLine()) != null)
+            { sb_result.append(line);}
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return sb_result.toString();
+    }
+
+    /**
+     * 很多行 会卡死
+     * @param context
+     * @param rawID
+     * @return
+     */
+    @Deprecated
+    public static String getStringFromRawOld(Context context,int rawID) {
         String result = "";
         try {
             InputStream ssq_is = context.getResources().openRawResource(rawID);
 
             InputStreamReader inputReader = new InputStreamReader(ssq_is);
+            //InputStreamReader inputReader = new InputStreamReader(ssq_is,"UTF-8");
             BufferedReader bufReader = new BufferedReader(inputReader);
             String line = "";
             while ((line = bufReader.readLine()) != null)
-                result += line;
+            {result += line;}
         } catch (Exception e) {
             e.printStackTrace();
         }
         return result;
     }
 
+    public static String getCateNameByCateID(Context context,String proCateID){
+        String proCateName="";
+    String pro_cate_json = getStringFromRaw(context, R.raw.pro_cate);
+    ProCate proCate= JSON.parseObject(pro_cate_json,ProCate.class);
+    List<ProCate.CatesBean>  proCateCatesBeanList=proCate.getCates();
+    for (int i = 0; i <proCateCatesBeanList.size() ; i++) {
+        ProCate.CatesBean pccb=proCateCatesBeanList.get(i);
+        if (("0_"+proCateID).equals(pccb.getCateid())){
+            proCateName=pccb.getCatename();
+            break;
+        }
+        String[] nowProcateIDArray=pccb.getCateid().split("_");
+        if (nowProcateIDArray!=null&&nowProcateIDArray.length>1)
+        {
+         String   nowParentID=nowProcateIDArray[1];
+        List<ProCate.CatesBean.ChildrenBean> childrenBeans=pccb.getChildren();
+        for (int j = 0; j < childrenBeans.size(); j++) {
+            if ((nowParentID+"_"+proCateID).equals( childrenBeans.get(j).getCateid())){
+                proCateName=pccb.getCatename();
+                break;
+            }
+        }}
+    }
+        return  proCateName;
 
+}
 
     public static String getProvinceCityAreaNameStrByOnlyAreaID(Context context,String areaKey){
         if (areaKey==null||areaKey.trim().equals("")||areaKey.trim().toLowerCase().equals("null")){
             return "";
         }
         String ssqJson = getStringFromRaw(context, R.raw.ssq);
+        // String ssqJson = getStringFromRawOld(context, R.raw.ssq);
         List<Province> provinceList = parseJson(ssqJson);
         //
         String province = "";

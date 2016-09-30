@@ -10,5 +10,6 @@
     </declare-styleable>
     <declare-styleable name="ProvinceCityAreaSelectView">
         <attr name="allAreaKey" format="string"/>
+        <attr name="isShowArea" format="boolean"/>
     </declare-styleable>
 </resources>

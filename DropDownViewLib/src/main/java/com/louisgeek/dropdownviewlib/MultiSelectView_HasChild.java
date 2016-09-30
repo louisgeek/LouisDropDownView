@@ -157,12 +157,16 @@ public class MultiSelectView_HasChild extends LinearLayout implements View.OnCli
     public MultiSelectView_HasChild(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init(context);
+
     }
 
     /**
      * 单纯用于分类展示功能
      */
     private void initHasChildData() {
+        if (isInEditMode()){
+            return;
+        }
         //
         String pro_cate_json = MySSQTool.getStringFromRaw(mContext,R.raw.pro_cate);
         ProCate proCate= JSON.parseObject(pro_cate_json,ProCate.class);

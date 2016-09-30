@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
+import com.louisgeek.dropdownviewlib.tools.KeyBoardTool;
 import com.louisgeek.dropdownviewlib.tools.SizeTool;
 import com.louisgeek.dropdownviewlib.tools.StringTool;
 
@@ -198,6 +199,9 @@ private  Context mContext;
         if (!canSelect){
             return;
         }
+        //
+        KeyBoardTool.hideKeyboard(v);
+
         nowClickView=v;
 
         if (dataList==null||dataList.size()>0){

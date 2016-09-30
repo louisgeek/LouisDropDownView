@@ -1,4 +1,4 @@
-{
+﻿{
   "provinces": {
     "province": [
       {
@@ -18045,153 +18045,13 @@
           "city": [
             {
               "ssqid": "810100",
-              "ssqname": "美国",
+              "ssqname": "海外",
               "ssqename": "",
               "areas": {
                 "area": [
                   {
                     "ssqid": "810101",
-                    "ssqname": "美国",
-                    "ssqename": ""
-                  }
-                ]
-              }
-            },
-            {
-              "ssqid": "810200",
-              "ssqname": "日本",
-              "ssqename": "",
-              "areas": {
-                "area": [
-                  {
-                    "ssqid": "810201",
-                    "ssqname": "日本",
-                    "ssqename": ""
-                  }
-                ]
-              }
-            },
-            {
-              "ssqid": "810300",
-              "ssqname": "印度",
-              "ssqename": "",
-              "areas": {
-                "area": [
-                  {
-                    "ssqid": "810301",
-                    "ssqname": "印度",
-                    "ssqename": ""
-                  }
-                ]
-              }
-            },
-            {
-              "ssqid": "810400",
-              "ssqname": "巴西",
-              "ssqename": "",
-              "areas": {
-                "area": [
-                  {
-                    "ssqid": "810401",
-                    "ssqname": "巴西",
-                    "ssqename": ""
-                  }
-                ]
-              }
-            },
-            {
-              "ssqid": "810500",
-              "ssqname": "阿根廷",
-              "ssqename": "",
-              "areas": {
-                "area": [
-                  {
-                    "ssqid": "810501",
-                    "ssqname": "阿根廷",
-                    "ssqename": ""
-                  }
-                ]
-              }
-            },
-            {
-              "ssqid": "810600",
-              "ssqname": "荷兰",
-              "ssqename": "",
-              "areas": {
-                "area": [
-                  {
-                    "ssqid": "810601",
-                    "ssqname": "荷兰",
-                    "ssqename": ""
-                  }
-                ]
-              }
-            },
-            {
-              "ssqid": "810700",
-              "ssqname": "德国",
-              "ssqename": "",
-              "areas": {
-                "area": [
-                  {
-                    "ssqid": "810701",
-                    "ssqname": "德国",
-                    "ssqename": ""
-                  }
-                ]
-              }
-            },
-            {
-              "ssqid": "810800",
-              "ssqname": "法国",
-              "ssqename": "",
-              "areas": {
-                "area": [
-                  {
-                    "ssqid": "810801",
-                    "ssqname": "法国",
-                    "ssqename": ""
-                  }
-                ]
-              }
-            },
-            {
-              "ssqid": "810900",
-              "ssqname": "瑞士",
-              "ssqename": "",
-              "areas": {
-                "area": [
-                  {
-                    "ssqid": "810901",
-                    "ssqname": "瑞士",
-                    "ssqename": ""
-                  }
-                ]
-              }
-            },
-            {
-              "ssqid": "811000",
-              "ssqname": "墨西哥",
-              "ssqename": "",
-              "areas": {
-                "area": [
-                  {
-                    "ssqid": "811001",
-                    "ssqname": "墨西哥",
-                    "ssqename": ""
-                  }
-                ]
-              }
-            },
-            {
-              "ssqid": "811000",
-              "ssqname": "其他",
-              "ssqename": "",
-              "areas": {
-                "area": [
-                  {
-                    "ssqid": "811001",
-                    "ssqname": "其他",
+                    "ssqname": "海外",
                     "ssqename": ""
                   }
                 ]

@@ -25,10 +25,12 @@ import java.util.Map;
 public class DropDownViewRecycleViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private  int itemWidth;
+    private  boolean mShowAtAbove=false;
     private static final String TAG = "DropDownViewAdapter";
     private Map<Integer,Boolean> mIntegerBooleanMap_StoreSelectedState=new HashMap<>();
 
     public void updateBackground(boolean showAbove,RecyclerView recyclerView) {
+        mShowAtAbove=showAbove;
         List<Map<String, Object>> mNameStateListTemp=new ArrayList<>();
         for (int i = 0; i < mDataList.size(); i++) {
             Map<String, Object> mapTemp= mDataList.get(i);
@@ -91,6 +93,11 @@ public class DropDownViewRecycleViewAdapter extends RecyclerView.Adapter<Recycle
         if (position==0){
             ///
             myRecyclerViewHolder.mTextView.setText(DropDownView.NUSELETED_SHOW_NAME);
+            if (mShowAtAbove){
+                myRecyclerViewHolder.id_ll_item.setBackgroundResource(R.drawable.selector_shape_list_item_nobottom);
+            }else{
+                myRecyclerViewHolder.id_ll_item.setBackgroundResource(R.drawable.selector_shape_list_item_notop);
+            }
         }else{
             int  realPos=position-1;
             ///

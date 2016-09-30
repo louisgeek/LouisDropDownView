@@ -41,7 +41,7 @@ public class ProvinceCityAreaSelectView extends LinearLayout {
     private int nowProvince_index_setup = 0;
     private int nowCity_index_setup = 0;
     private static final String TAG = "ProvinceCityArea";
-
+    private boolean isShowArea;
     public ProvinceCityAreaSelectView(Context context) {
         super(context);
         init(context);
@@ -55,7 +55,7 @@ public class ProvinceCityAreaSelectView extends LinearLayout {
         TypedArray typedArray = context.obtainStyledAttributes(attrs,
                 R.styleable.ProvinceCityAreaSelectView);
         allAreaKey = typedArray.getString(R.styleable.ProvinceCityAreaSelectView_allAreaKey);//like "000000"  see in ssq.json
-
+        isShowArea=typedArray.getBoolean(R.styleable.ProvinceCityAreaSelectView_isShowArea,true);
         if (allAreaKey == null) {
             allAreaKey = ALL_AREA_KEY_DEFAULT;
         }
@@ -157,6 +157,12 @@ public class ProvinceCityAreaSelectView extends LinearLayout {
             }
         }
         id_ddv_area.setupDataList(dataList_area);
+        if (isShowArea){
+            id_ddv_area.setVisibility(VISIBLE);
+        }else
+        {
+            id_ddv_area.setVisibility(GONE);
+        }
 
     }
 
