@@ -251,16 +251,47 @@ public class MultiSelectView extends LinearLayout implements View.OnClickListene
         }
         mMultiSelectViewRecycleViewAdapter.updateDate(multiSelectMapListOutter_temp);
     }
+    private void  setupSelectedKeySortAble(String[] selectedKeys) {
+        List<String> strList= Arrays.asList(selectedKeys);
+        List<Map<String,Object>> multiSelectMapListOutter_temp=new ArrayList<>();
+        List<Map<String,Object>> multiSelectMapListOutter_selected_temp=new ArrayList<>();
+        List<Map<String,Object>> multiSelectMapListOutter_unSelect_temp=new ArrayList<>();
+        //存放选中的
+        for (int j = 0; j < mMultiSelectMapListOutter.size(); j++) {
+            String key=String.valueOf(mMultiSelectMapListOutter.get(j).get("key"));
+            if (strList.contains(key)){
+                mMultiSelectMapListOutter.get(j).put("checked",true);
+                multiSelectMapListOutter_selected_temp.add(mMultiSelectMapListOutter.get(j));
+            }else{
+                multiSelectMapListOutter_unSelect_temp.add(mMultiSelectMapListOutter.get(j));
+            }
+        }
+        multiSelectMapListOutter_temp.addAll(multiSelectMapListOutter_selected_temp);
+        multiSelectMapListOutter_temp.addAll(multiSelectMapListOutter_unSelect_temp);
+
+        mMultiSelectViewRecycleViewAdapter.updateDate(multiSelectMapListOutter_temp);
+    }
+    /**
+     * 设置已选的key  如果有setupMultiSelectMapListOutter  在其后调用
+     * @param selectedKeyStr
+     */
+    public void setupSelectedKeyStr(String selectedKeyStr,boolean sortAble){
+        if (selectedKeyStr==null||selectedKeyStr.equals("") || selectedKeyStr.equals("null")){
+            return;
+        }
+        String[] selectedKeys=selectedKeyStr.split(",");
+        if (sortAble){
+            this.setupSelectedKeySortAble(selectedKeys);
+        }else{
+            this.setupSelectedKey(selectedKeys);
+        }
+    }
     /**
      * 设置已选的key  如果有setupMultiSelectMapListOutter  在其后调用
      * @param selectedKeyStr
      */
     public void setupSelectedKeyStr(String selectedKeyStr){
-        if (selectedKeyStr==null||selectedKeyStr.equals("") || selectedKeyStr.equals("null")){
-            return;
-        }
-        String[] selectedKeys=selectedKeyStr.split(",");
-        this.setupSelectedKey(selectedKeys);
+        setupSelectedKeyStr(selectedKeyStr,false);
     }
 
     public  interface  OnCheckedChangedOrFinishListener {
